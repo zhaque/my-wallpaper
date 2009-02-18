@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.koonen.photostream" android:versionName="1.01"
-	android:versionCode="2">
+	package="com.koonen.photostream" android:versionName="1.02"
+	android:versionCode="3">
 
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -9,8 +9,8 @@
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.CAMERA" />
 
-	<application android:label="@string/application_name" android:debuggable="false"
-		android:theme="@style/Theme" android:icon="@drawable/ic_app_icon"> <!-- application_icon -->
+	<application android:label="@string/application_name"
+		android:debuggable="false" android:theme="@style/Theme" android:icon="@drawable/ic_app_icon"> <!-- application_icon -->
 
 		<provider android:name=".dao.PhotoUrlListProvider"
 			android:authorities="com.koonen.photostream.dao.PhotoUrlList" />
@@ -72,7 +72,8 @@
 			com.google.android.photostream.extra_photo, Flickr.Photo
 		-->
 		<activity android:name=".ViewPhotoActivity" android:label="@string/application_name"
-			android:configChanges="orientation|keyboardHidden" android:screenOrientation="sensor">
+			android:configChanges="orientation|keyboardHidden"
+			android:screenOrientation="sensor">
 			<intent-filter>
 				<action android:name="com.koonen.photostream.FLICKR_PHOTO" />
 				<category android:name="android.intent.category.DEFAULT" />
@@ -95,7 +96,7 @@
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
-		
+
 		<activity android:name=".CategoryEditActivity" android:label="@string/application_name">
 			<intent-filter>
 				<action android:name="com.koonen.photostream.CATEGORIES_EDIT" />

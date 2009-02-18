@@ -5,7 +5,6 @@ package com.koonen.photostream.api;
  * @author dryganets
  * 
  */
-//test commit
 public class UserNotFoundException extends ServiceException {
 
 	private static final long serialVersionUID = -2452895792705200301L;

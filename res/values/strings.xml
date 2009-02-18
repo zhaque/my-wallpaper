@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="application_name">My Wallpaper</string>
+	<string name="activity_create_shortcut">Flickr photos</string>
+	<string name="activity_set_wallpaper">Flickr</string>
+	<string name="activity_preferences">Settings</string>
+
+	<string name="screen_login_prompt">Username</string>
+	<string name="screen_login_error">
+		Unknown user or network error
+	</string>
+
+	<string name="context_menu_delete_user">Remove</string>
+	<string name="context_menu_show_photostream">Show photos</string>
+
+	<string name="screen_photostream_next">Next</string>
+	<string name="screen_photostream_separator">|</string>
+	<string name="screen_photostream_back">Back</string>
+	<string name="screen_more">More</string>
+
+	<string name="menu_item_photo_set">Set as Wallpaper</string>
+	<string name="menu_item_add_to_faivorites">
+		Save as Favorites
+	</string>
+	<string name="menu_item_delete_from_faivorites">
+		Delete from favorites
+	</string>
+	<string name="menu_item_similar">Simillar Backgrounds</string>
+
+	<string name="screen_photo_separator">|</string>
+
+	<string name="screen_photo_next">Next</string>
+	<string name="screen_photo_prev">Prev</string>
+
+	<string name="error_cannot_save_file">
+		Photo cannot be set as a wallpaper.
+	</string>
+	<string name="success_wallpaper_set">
+		Photo set as wallpaper.
+	</string>
+
+	<string name="menu_item_info_label">Information</string>
+	<string name="menu_item_settings_label">Settings</string>
+	<string name="menu_item_radar_label">Radar</string>
+	<string name="menu_item_share_label">Share</string>
+
+
+	<string name="error_cannot_find_location">
+		Could not find location.
+	</string>
+	<string name="error_cannot_find_radar">
+		Please install the Radar package.
+	</string>
+
+	<string name="notification_title">New photos</string>
+	<string name="notification_new_photos">%s has new photos</string>
+	<string name="notification_contact_has_new_photos">
+		%s has updated photos
+	</string>
+
+	<string name="notification_photos_not_loaded">
+		Photos not loaded. Please, check internet connection.
+	</string>
+	<string name="notification_photo_not_loaded">
+		Photo not loaded. Please, check internet connection.
+	</string>
+
+	<string name="preferences_notifications">
+		Notification settings
+	</string>
+	<string name="preferences_notifications_enable">
+		New photos notifications
+	</string>
+	<string name="preferences_notifications_summary">
+		Notify in status bar when new photos are available
+	</string>
+
+	<string name="preferences_vibrate_enable">Vibrate</string>
+	<string name="preferences_vibrate_summary">
+		Also vibrate when new photos are available
+	</string>
+
+	<string name="preferences_ring_enable">Sound</string>
+	<string name="preferences_ring_summary">
+		Also play ringtone when new photos are available
+	</string>
+
+	<string name="user_preferences_change_automaticaly">
+		Enable Rotation
+	</string>
+	<string name="user_preferences_change_background_period">
+		Schedule
+	</string>
+
+	<string name="user_preferences_rotation_background_notification">
+		Notification
+	</string>
+
+	<string name="user_preferences_enable_network">
+		Enable network
+	</string>
+
+	<string name="user_preferences_background_source">
+		Collection
+	</string>
+
+	<string name="user_preferences_name">Network login</string>
+
+	<string name="user_preferences_passowrd">Network password</string>
+
+	<string name="user_preferences_network">Select network</string>
+
+	<string name="user_preferences_images_per_request">
+		Images per request
+	</string>
+
+	<string name="user_preferences_effects_title">Effects</string>
+
+	<string name="preferences_ringtone">Select ringtone</string>
+
+	<string name="unknown_username">Could not find user %s</string>
+
+	<!-- EULA -->
+	<string name="eula_title">License agreement</string>
+	<string name="eula_accept">Accept</string>
+	<string name="eula_refuse">Don\'t accept</string>
+
+	<string name="disclaimer_title">Disclaimer</string>
+	<string name="disclaimer_accept">Accept</string>
+
+	<string name="menu_personal">Personal</string>
+	<string name="menu_my_favorites">My favorites</string>
+	<string name="menu_search">Search</string>
+	<string name="menu_take_picture">Take picture</string>
+	<string name="menu_settings">Settings</string>
+	<string name="menu_categories">My Tags</string>
+
+	<string name="dialog_categories_name">Categories list</string>
+	<string name="dialog_search">Search</string>
+	<string name="dialog_take_photo">Take photo</string>
+	<string name="dialog_share">Share Photo</string>
+	<string name="dialog_share_error">Sorry, Can\'t share photo</string>
+	<string name="dialog_category">Category</string>
+
+	<string name="search_button_label">Search</string>
+	<string name="search_query_not_empty">
+		Search query can\'t be empty
+	</string>
+
+	<string name="email_to_label">Email to:</string>
+	<string name="sent_email_button">Sent</string>
+	<string name="redo_button">Redo</string>
+	<string name="mail_subject">Share Photo</string>
+	<string name="mail_body">I want to share photo\nLink:\n%s</string>
+	<string name="share_successfully">Share successfully</string>
+	<string name="share_fail">Share fail</string>
+
+	<string name="from_camera_button_label">From Camera</string>
+	<string name="from_file_button_label">From File</string>
+	<string name="cancel_button_label">Cancel</string>
+
+	<string name="view_photo_title_format">Title: %s</string>
+	<string name="view_photo_tags_format">Tags: %s</string>
+	<string name="view_photo_owner_location_format">
+		Owner location: %s
+	</string>
+	<string name="view_photo_date_taken_format">Date taken: %s</string>
+
+	<string name="camera_take_picture">Take picture</string>
+
+	<string name="menu_category_add">Add</string>
+	<string name="menu_category_update">Update</string>
+	<string name="menu_category_delete">Delete</string>
+
+	<string name="category_name_label">Category name:</string>
+	<string name="category_tags_label">Keywords:</string>
+	<string name="category_save_successfully">
+		Category save successfully
+	</string>
+	<string name="category_exist">
+		Category with this name already exist
+	</string>
+	<string name="category_not_exist">
+		Category with this name not exist
+	</string>
+	<string name="category_save_fail">Category save fail</string>
+	<string name="ok_button_label">ok</string>
+	<string name="category_name_not_empty">
+		Please, fill the category name
+	</string>
+	<string name="tags_not_empty">Please, fill tags</string>
+
+	<string name="up_one_level">..</string>
+	<string name="current_dir">.</string>
+
+	<string name="photo_favorite_save_successfully">
+		Photo save to favorites successfully
+	</string>
+	<string name="photo_favorite_delete_successfully">
+		Photo delete from favorites successfully
+	</string>
+	
+	<string name="can_not_access_to_sdcard">
+		Can\'t access to sdcard
+	</string>
+	
+	<string name="no_favorites_photo">
+		You haven\'t favorites photos
+	</string>
+	
+	<string name="dialog_name_info">
+		Info
+	</string>
+	
+	<string name="category_first_open">
+		Please enter the search tags keywords you would like to use for this category
+	</string>
+</resources>

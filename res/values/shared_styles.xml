@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="TextMenuEntry">
+		<item name="android:textSize">35px</item>
+		<item name="android:textColor">
+			@color/eden_text_menu_entry
+		</item>
+	</style>
+</resources>

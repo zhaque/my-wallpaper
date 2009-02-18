@@ -1,0 +1,140 @@
+<resources>
+
+	<string-array name="background_change_period_names">
+		<item>every min</item>
+		<item>every 5 min</item>
+		<item>every 10 min</item>
+		<item>every 30 min</item>
+		<item>every six hours</item>
+		<item>every day</item>
+		<item>every other day</item>
+		<item>every week</item>
+		<item>every month</item>
+	</string-array>
+
+	<string-array name="background_change_period_values">
+		<item>60000</item>
+		<item>300000</item>
+		<item>600000</item>
+		<item>1800000</item>
+		<item>21600000</item>
+		<item>86400000</item> 
+		<item>172800000</item>
+		<item>604800000</item>
+		<item>2419200000</item>
+	</string-array>
+
+	<string-array name="images_per_request_names">
+		<item>2</item>
+		<item>4</item>
+		<item>6</item>
+	</string-array>
+
+	<string-array name="effects_names">
+		<item>Random effect</item>
+		<item>Translate effect</item>
+		<item>Alpha effect</item>
+		<item>3D rotate effect</item>
+		<item>Scale effect</item>
+	</string-array>
+	
+	<string-array name="effects_values">
+		<item>random</item>
+		<item>translate</item>
+		<item>alpha</item>
+		<item>3dRotate</item>
+		<item>scale</item>
+	</string-array>
+
+	<string-array name="photo_source_type_names">
+		<item>My Favorites</item>
+		<item>Personal</item>
+		<item>Random</item>
+	</string-array>
+
+	<string-array name="photo_source_type_values">
+		<item>favorites</item>
+		<item>personal</item>
+		<item>random</item>
+	</string-array>
+
+	<string-array name="network_names">
+		<item>Flickr</item>
+	</string-array>
+
+	<string-array name="network_values">
+		<item>flickr</item>
+	</string-array>
+	
+	<string-array name="take_photo_menu_items">
+		<item>From Camera</item>
+		<item>From File</item>
+		<item>Cancel</item>
+	</string-array>
+
+	<array name="fileEndingImage">
+        <item>.png</item>
+        <item>.gif</item>
+        <item>.jpg</item>
+        <item>.jpeg</item>
+        <item>.bmp</item>
+    </array>
+    
+    <array name="init_categories">
+        <item>Me</item>
+        <item>Art</item>
+        <item>Australia</item>
+        <item>Beach</item>
+        <item>Birthday</item>
+        <item>California</item>
+        <item>Canada</item>
+        <item>Cat</item>
+        <item>China</item>
+        <item>Christmas</item>
+        <item>City</item>
+        <item>Concert</item>
+        <item>Dog</item>
+        <item>England</item>
+        <item>Europe</item>
+        <item>Family</item>
+        <item>Festival</item>
+        <item>Flowers</item>
+        <item>Food</item>
+        <item>France</item>
+        <item>Friends</item>
+        <item>Fun</item>
+        <item>Germany</item>
+        <item>Green</item>
+        <item>Holiday</item>
+        <item>Italy</item>
+        <item>Japan</item>
+        <item>London</item>
+        <item>Music</item>
+        <item>Nature</item>
+        <item>New</item>
+        <item>Newyork</item>
+        <item>Night</item>
+        <item>Nikon</item>
+        <item>Nyc</item>
+        <item>Paris</item>
+        <item>Park</item>
+        <item>Party</item>
+        <item>People</item>
+        <item>Portrait</item>
+        <item>Red</item>
+        <item>San Francisco</item>
+        <item>Sky</item>
+        <item>Snow</item>
+        <item>Spain</item>
+        <item>Summer</item>
+        <item>Sunset</item>
+        <item>Stockholm</item>
+        <item>Travel</item>
+        <item>Usa</item>
+        <item>Vacation</item>
+        <item>Water</item>
+        <item>Wedding</item>
+        <item>Winter</item>
+    </array>
+
+</resources>

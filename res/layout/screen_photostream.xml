@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+	<com.koonen.photostream.GridLayout
+		style="@style/PhotoGrid" android:id="@+id/grid_photos"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:paddingLeft="10dip" android:paddingTop="15dip"
+		android:paddingRight="10dip" android:paddingBottom="55dip" />
+
+	<ImageView android:id="@+id/splash_image"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:visibility="gone" />
+
+	<ImageView android:id="@+id/refresh_image" android:src="@drawable/refresh"
+		android:layout_width="150dip" android:layout_height="150dip"
+		android:visibility="gone" android:layout_gravity="center"
+		android:scaleType="centerInside" />
+
+	<ViewAnimator android:id="@+id/switcher_menu"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:inAnimation="@anim/fade_in" android:outAnimation="@anim/fade_out">
+
+		<include layout="@layout/shared_progress" />
+
+		<LinearLayout style="@style/TextMenu"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:gravity="right">
+
+			<TextView style="@style/TextMenuEntry" android:id="@+id/menu_back"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/screen_photostream_back" />
+
+			<TextView style="@style/TextMenuEntry" android:id="@+id/menu_separator"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_marginLeft="5dip" android:layout_marginRight="5dip"
+				android:text="@string/screen_photostream_separator" />
+
+			<TextView style="@style/TextMenuEntry" android:id="@+id/menu_next"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/screen_photostream_next" />
+
+			<TextView style="@style/TextMenuEntry"
+				android:id="@+id/menu_more" android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/screen_more" />
+		</LinearLayout>
+
+	</ViewAnimator>
+
+</FrameLayout>

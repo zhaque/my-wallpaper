@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	
+	<ImageView android:id="@+id/refresh_image" android:src="@drawable/refresh"
+		android:layout_width="150dip" android:layout_height="150dip"
+		android:visibility="gone" android:layout_gravity="center"
+		android:scaleType="centerInside" />
+
+	<LinearLayout android:id="@+id/container_photo"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:paddingLeft="3dip" android:paddingRight="3dip"
+		android:gravity="center_vertical" android:orientation="vertical">
+
+		<ImageView android:id="@+id/image_photo"
+			android:layout_width="fill_parent" android:layout_height="0dip"
+			android:layout_weight="0.9" android:layout_marginBottom="8dip"
+			android:layout_marginTop="25dip" android:scaleType="center" />
+
+		<LinearLayout android:layout_weight="0.1"
+			android:layout_width="fill_parent" android:layout_height="140dp"
+			android:orientation="vertical">
+
+			<TextView android:id="@+id/caption_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:singleLine="true"
+				android:textSize="18px" android:textColor="@android:color/white" />
+
+			<TextView android:id="@+id/caption_tag"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:singleLine="true"
+				android:textSize="12px"
+				android:textColor="@color/translucent_white" />
+
+			<TextView android:id="@+id/caption_location"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:singleLine="true"
+				android:textSize="12px"
+				android:textColor="@color/translucent_white" />
+
+			<TextView android:id="@+id/caption_date"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:singleLine="true"
+				android:textSize="12px" android:layout_marginBottom="65dip"
+				android:textColor="@color/translucent_white" />
+		</LinearLayout>
+
+	</LinearLayout>
+
+	<ViewAnimator android:id="@+id/switcher_menu"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:inAnimation="@anim/fade_in"
+		android:outAnimation="@anim/fade_out">
+
+		<include layout="@layout/shared_progress" />
+
+		<LinearLayout style="@style/TextMenu"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:gravity="right">
+
+			<TextView style="@style/TextMenuEntry"
+				android:id="@+id/menu_prev" android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/screen_photo_prev" />
+
+			<TextView style="@style/TextMenuEntry"
+				android:id="@+id/menu_separator" android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="5dip" android:layout_marginRight="5dip"
+				android:text="@string/screen_photostream_separator" />
+
+			<TextView style="@style/TextMenuEntry"
+				android:id="@+id/menu_next" android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/screen_photo_next" />
+				
+			<TextView style="@style/TextMenuEntry"
+				android:id="@+id/menu_more" android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/screen_more" />
+
+		</LinearLayout>
+
+	</ViewAnimator>
+
+</FrameLayout>

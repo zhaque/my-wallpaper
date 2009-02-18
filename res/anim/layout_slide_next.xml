@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gridLayoutAnimation
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:columnDelay="25%" android:directionPriority="row"
+	android:animation="@anim/slide_left" />

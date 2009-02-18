@@ -24,6 +24,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -86,11 +87,14 @@ public class ViewPhotoActivity extends Activity implements
 
 	public static final int REQUEST_SENT_EMAIL = 43;
 
+	private static final String TAG = "ViewPhotoActivity";
+
 	private Photo mPhoto;
 	private ServiceContext serviceContext;
 	private boolean isFirstOpen;
 	private Bitmap mBitmap;
 	private boolean restoreBitmap;
+	private boolean loading = false;
 
 	private ViewAnimator mSwitcher;
 	private ImageView mPhotoView;
@@ -132,7 +136,7 @@ public class ViewPhotoActivity extends Activity implements
 		serviceContext = getServiceContext();
 		isFirstOpen = true;
 
-		mBitmap = null;
+		// mBitmap = null;
 		restoreBitmap = false;
 
 		Configuration config = new ConfigurationReader(this).getConfiguration();
@@ -227,6 +231,10 @@ public class ViewPhotoActivity extends Activity implements
 		// of one of our views so we must wait for the first layout pass to be
 		// done to make sure we have the correct size.
 		mContainer.getViewTreeObserver().addOnGlobalLayoutListener(this);
+
+		if (loading) {
+			this.showProgress();
+		}
 	}
 
 	/**
@@ -273,7 +281,8 @@ public class ViewPhotoActivity extends Activity implements
 	 */
 	private void loadPhoto() {
 		final Object data = getLastNonConfigurationInstance();
-		if (data == null && !restoreBitmap) {
+		if (data == null && !restoreBitmap && !isLoading()) {
+			Log.i(TAG, "geting data from service");
 			int width = mPhotoView.getMeasuredWidth();
 			int height = mPhotoView.getMeasuredHeight();
 			mTask = new LoadPhotoTask().execute(mPhoto, width, height);
@@ -281,7 +290,7 @@ public class ViewPhotoActivity extends Activity implements
 			if (restoreBitmap) {
 				setPhoto(mBitmap);
 				restoreBitmap = false;
-				
+
 				prepareMenu();
 				mTask = null;
 
@@ -490,7 +499,6 @@ public class ViewPhotoActivity extends Activity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
-
 		prepareMenu();
 	}
 
@@ -571,6 +579,7 @@ public class ViewPhotoActivity extends Activity implements
 		@Override
 		public void onPreExecute() {
 			super.onPreExecute();
+			setLoading(true);
 			handler.post(new Runnable() {
 
 				@Override
@@ -650,9 +659,11 @@ public class ViewPhotoActivity extends Activity implements
 			mTask = null;
 
 			mSwitcher.showNext();
+
 			mContainer.startAnimation(AnimationUtils.loadAnimation(
 					ViewPhotoActivity.this, R.anim.fade_in));
 			mContainer.setVisibility(View.VISIBLE);
+			setLoading(false);
 		}
 
 	}
@@ -662,7 +673,10 @@ public class ViewPhotoActivity extends Activity implements
 		super.onConfigurationChanged(newConfig);
 		if (currentOrientation != newConfig.orientation) {
 			currentOrientation = newConfig.orientation;
-			mBitmap = ((BitmapDrawable) mPhotoView.getDrawable()).getBitmap();
+			if (mPhotoView.getDrawable() != null) {
+				mBitmap = ((BitmapDrawable) mPhotoView.getDrawable())
+						.getBitmap();
+			}
 			restoreBitmap = mBitmap != null;
 			initActivity();
 		}
@@ -759,7 +773,8 @@ public class ViewPhotoActivity extends Activity implements
 		@Override
 		public void onPostExecuteSuccess(final Intent intent) {
 			ViewPhotoActivity.this.mTask = new SetWallpaperTask(
-					ViewPhotoActivity.this, new SetWallpaperExecutor()).execute();
+					ViewPhotoActivity.this, new SetWallpaperExecutor())
+					.execute();
 		}
 	}
 
@@ -806,5 +821,17 @@ public class ViewPhotoActivity extends Activity implements
 		// mContainer.setLayoutAnimation(animation);
 		mContainer.invalidate();
 		loadPhoto();
+	}
+
+	private synchronized void setLoading(boolean value) {
+		loading = value;
+	}
+
+	private synchronized boolean isLoading() {
+		return loading;
+	}
+
+	private void showProgress() {
+		mSwitcher.setDisplayedChild(1);
 	}
 }

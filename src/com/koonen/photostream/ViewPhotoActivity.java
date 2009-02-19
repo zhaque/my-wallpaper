@@ -108,7 +108,6 @@ public class ViewPhotoActivity extends Activity implements
 	private View mMenuSeparator;
 
 	private UserTask<?, ?, ?> mTask;
-	private TextView mPhotoTitle;
 	private TextView mPhotoTags;
 	private TextView mPhotoLocation;
 	private TextView mPhotoDate;
@@ -200,7 +199,6 @@ public class ViewPhotoActivity extends Activity implements
 		mSwitcher = (ViewAnimator) findViewById(R.id.switcher_menu);
 		mPhotoView = (ImageView) findViewById(R.id.image_photo);
 
-		mPhotoTitle = (TextView) findViewById(R.id.caption_title);
 		mPhotoTags = (TextView) findViewById(R.id.caption_tag);
 		mPhotoLocation = (TextView) findViewById(R.id.caption_location);
 		mPhotoDate = (TextView) findViewById(R.id.caption_date);
@@ -704,9 +702,6 @@ public class ViewPhotoActivity extends Activity implements
 		params.height = result.getHeight();
 		params.weight = 0.0f;
 		mPhotoView.setLayoutParams(params);
-
-		handleTextViewPortrait(mPhoto.getTitle(), mPhotoTitle, offsetX,
-				R.string.view_photo_title_format);
 
 		handleTextViewPortrait(mPhoto.getDate(), mPhotoDate, offsetX,
 				R.string.view_photo_date_taken_format);

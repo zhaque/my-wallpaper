@@ -23,7 +23,7 @@
 		Save as Favorites
 	</string>
 	<string name="menu_item_delete_from_faivorites">
-		Delete from favorites
+		Remove from Favorites
 	</string>
 	<string name="menu_item_similar">Simillar Backgrounds</string>
 
@@ -151,7 +151,7 @@
 	<string name="email_to_label">Email to:</string>
 	<string name="sent_email_button">Sent</string>
 	<string name="redo_button">Redo</string>
-	<string name="mail_subject">Share Photo</string>
+	<string name="mail_subject">My Wallpaper : Share a Photo</string>
 	<string name="mail_body">I want to share photo\nLink:\n%s</string>
 	<string name="share_successfully">Share successfully</string>
 	<string name="share_fail">Share fail</string>
@@ -159,13 +159,12 @@
 	<string name="from_camera_button_label">From Camera</string>
 	<string name="from_file_button_label">From File</string>
 	<string name="cancel_button_label">Cancel</string>
-
-	<string name="view_photo_title_format">Title: %s</string>
+	
 	<string name="view_photo_tags_format">Tags: %s</string>
 	<string name="view_photo_owner_location_format">
 		Owner location: %s
 	</string>
-	<string name="view_photo_date_taken_format">Date taken: %s</string>
+	<string name="view_photo_date_taken_format">Date captured: %s</string>
 
 	<string name="camera_take_picture">Take picture</string>
 
@@ -214,6 +213,6 @@
 	</string>
 	
 	<string name="category_first_open">
-		Please enter the search tags keywords you would like to use for this category
+		Press the Menu to manage your tags with using keywords of your choice
 	</string>
 </resources>

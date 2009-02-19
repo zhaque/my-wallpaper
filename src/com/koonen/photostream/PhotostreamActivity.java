@@ -206,8 +206,15 @@ public class PhotostreamActivity extends Activity implements
 		userPreferences = new UserPreferences(this);
 
 		if (serviceContext == null) {
-			serviceContext = ServiceContext.createRecentContext(userPreferences
-					.getImagesPerRequest());
+			if (userPreferences.getGroup() == "") {
+				serviceContext = ServiceContext
+						.createRecentContext(userPreferences
+								.getImagesPerRequest());
+			} else {
+				serviceContext = ServiceContext.createSearchContext(
+						userPreferences.getImagesPerRequest(), "");
+			}
+
 		}
 
 		initService();
@@ -624,7 +631,8 @@ public class PhotostreamActivity extends Activity implements
 
 		@Override
 		public void onPostExecute(PhotoList result) {
-			if (serviceContext.getType() == Type.FAVORITES && result.getCount() == 0) {
+			if (serviceContext.getType() == Type.FAVORITES
+					&& result.getCount() == 0) {
 				showMessage(R.string.no_favorites_photo);
 			}
 			prepareMenu();

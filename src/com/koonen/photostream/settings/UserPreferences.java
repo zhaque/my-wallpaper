@@ -28,6 +28,7 @@ public class UserPreferences {
 	public static final String ROTATION_NOTIFICATION_KEY = "photostream.rotation_background_notification";
 
 	public static final String EFFECTS_KEY = "photostream.effects";
+	public static final String GROUP_NAME_KEY = "photostream.groupName";
 
 	public static final String IMAGES_PER_REQUEST = "photostream.images_per_request";
 
@@ -95,6 +96,10 @@ public class UserPreferences {
 
 	public String getEmail() {
 		return "22dsse@gmail.com";
+	}
+
+	public String getGroup() {
+		return preferences.getString(GROUP_NAME_KEY, "94834891@N00");
 	}
 
 }

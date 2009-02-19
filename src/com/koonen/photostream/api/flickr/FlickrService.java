@@ -628,7 +628,8 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 				}
 				break;
 			} catch (IOException exception) {
-				Log.e(LOG_TAG, i + " trial is failed - " + exception.getMessage());
+				Log.e(LOG_TAG, i + " trial is failed - "
+						+ exception.getMessage());
 				if (i + 1 == RECONNECT_COUNT) {
 					throw exception;
 				}
@@ -647,6 +648,11 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 		uri.appendQueryParameter(PARAM_PAGE, String.valueOf(page));
 		uri.appendQueryParameter(PARAM_TAGS, query);
 		uri.appendQueryParameter(PARAM_EXTRAS, VALUE_DEFAULT_EXTRAS);
+
+		String group = userPreferences.getGroup();
+		if (group != "") {
+			uri.appendQueryParameter(PARAM_GROUP_ID, group);
+		}
 
 		final HttpGet get = new HttpGet(uri.build().toString());
 		final PhotoList photos = new PhotoList();

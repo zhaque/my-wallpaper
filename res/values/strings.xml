@@ -85,6 +85,7 @@
 		Also play ringtone when new photos are available
 	</string>
 
+	<string name="user_preferences_group">Group</string>
 	<string name="user_preferences_change_automaticaly">
 		Enable Rotation
 	</string>

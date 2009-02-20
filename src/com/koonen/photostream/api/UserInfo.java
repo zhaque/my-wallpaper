@@ -16,6 +16,11 @@ public class UserInfo implements Parcelable {
 		mUserId = user.getId();
 	}
 	
+	public UserInfo(UserInfo userInfo) {
+		mUserId = userInfo.mUserId;
+		mLocation = userInfo.mLocation;
+	}
+	
 	public UserInfo(Parcel parcel) {
 		mUserId = parcel.readString();
 		mLocation = parcel.readString();

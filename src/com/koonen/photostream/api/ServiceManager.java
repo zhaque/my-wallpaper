@@ -57,7 +57,7 @@ public class ServiceManager {
 	private FlickrService getFlickrService() {
 		if (flickrService == null) {
 			flickrService = new FlickrService(userPreferences, photoDAO,
-					imageDAO);
+					imageDAO, context);
 		}
 		return flickrService;
 	}

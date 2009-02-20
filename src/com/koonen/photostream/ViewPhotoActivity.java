@@ -54,6 +54,7 @@ import com.koonen.photostream.dao.PhotoDAO;
 import com.koonen.photostream.settings.UserPreferences;
 import com.koonen.photostream.settings.UserSettingsActivity;
 import com.koonen.utils.ConfigurationReader;
+import com.koonen.utils.StreamUtils;
 
 /**
  * Activity that displays a photo along with its title and the date at which it
@@ -345,6 +346,10 @@ public class ViewPhotoActivity extends Activity implements
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		boolean notFilePhoto = !(mPhoto instanceof FilePhoto);
+		if (!notFilePhoto) {
+			FilePhoto filePhoto = (FilePhoto) mPhoto;
+			notFilePhoto = filePhoto.isCached();
+		}
 		MenuItem item = menu.findItem(R.id.menu_item_save_as_faivorites);
 		if (notFilePhoto) {
 			photoExist = photoDAO.hasExist(mPhoto);
@@ -461,12 +466,26 @@ public class ViewPhotoActivity extends Activity implements
 	}
 
 	private void onFavorite() {
+		boolean suceess = false;
 		if (photoExist) {
 			photoDAO.delete(mPhoto);
 			showMessage(R.string.photo_favorite_delete_successfully);
 		} else {
 			photoDAO.insert(mPhoto);
-			showMessage(R.string.photo_favorite_save_successfully);
+			Photo photo = photoDAO.selectByPhotoId(mPhoto.getPhotoId());
+
+			if (photo != null) {
+				suceess = StreamUtils
+						.saveBitmap(this, ((BitmapDrawable) mPhotoView
+								.getDrawable()).getBitmap(), photo.getId()
+								+ ".jpg");
+			}
+
+			if (suceess) {
+				showMessage(R.string.photo_favorite_save_successfully);
+			} else {
+				showMessage(R.string.photo_favorite_save_fail);
+			}
 		}
 	}
 

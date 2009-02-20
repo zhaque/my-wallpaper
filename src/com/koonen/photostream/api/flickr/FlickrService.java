@@ -33,6 +33,7 @@ import org.apache.http.params.HttpProtocolParams;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Bitmap;
@@ -43,6 +44,7 @@ import android.util.Log;
 import android.util.Xml;
 import android.view.InflateException;
 
+import com.koonen.photostream.api.FilePhoto;
 import com.koonen.photostream.api.IPhotoService;
 import com.koonen.photostream.api.Photo;
 import com.koonen.photostream.api.PhotoList;
@@ -76,14 +78,16 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 	private UserPreferences userPreferences;
 	private PhotoDAO photoDAO;
 	private ImageDAO imageDAO;
+	private Context context;
 
 	private HttpClient client;
 
 	public FlickrService(UserPreferences userPreferences, PhotoDAO photoDAO,
-			ImageDAO imageDAO) {
+			ImageDAO imageDAO, Context context) {
 		this.userPreferences = userPreferences;
 		this.photoDAO = photoDAO;
 		this.imageDAO = imageDAO;
+		this.context = context;
 		userPreferences
 				.registerOnSharedPreferenceChangeListener(new OnSharedPreferenceChangeListener() {
 
@@ -755,17 +759,27 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 		photoList.setPage(page);
 		photoList.setPageCount(perPage);
 		List<Photo> photos = null;
+		List<Photo> cachedPhotos = null;
 		try {
 			photos = photoDAO.select(getStart(perPage, page), perPage);
+			cachedPhotos = new ArrayList<Photo>(photos.size());
 			for (Photo photo : photos) {
 				loadPhotoInfo(photo);
+				File file = context.getFileStreamPath(photo.getId() + ".jpg");
+				if (file.exists() && file.canRead()) {
+					FilePhoto filePhoto = new FilePhoto(photo, file.toURI().toString());
+					cachedPhotos.add(filePhoto);
+				} else {
+					cachedPhotos.add(photo);
+				}
 			}
+			
 			int totalCount = photoDAO.getTotalCount();
 			photoList.setPageCount(calculatePageCount(totalCount, perPage));
 		} catch (Exception e) {
 			android.util.Log.e(LOG_TAG, "Could not load favorite photos ");
 		}
-		photoList.setPhotos(photos);
+		photoList.setPhotos(cachedPhotos);
 
 		return photoList;
 	}

@@ -196,6 +196,9 @@
 	<string name="photo_favorite_save_successfully">
 		Photo save to favorites successfully
 	</string>
+	<string name="photo_favorite_save_fail">
+		Photo save to favorites fail
+	</string>
 	<string name="photo_favorite_delete_successfully">
 		Photo delete from favorites successfully
 	</string>

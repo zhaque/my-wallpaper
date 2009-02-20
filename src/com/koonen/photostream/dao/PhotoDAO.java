@@ -43,7 +43,7 @@ public class PhotoDAO {
 		return selectByPhotoId(photo.getPhotoId()) != null;
 	}
 
-	private Photo selectByPhotoId(String photoId) {
+	public Photo selectByPhotoId(String photoId) {
 		Photo photo = null;
 		Cursor cursor = context.getContentResolver().query(
 				PhotoUrlList.CONTENT_URI, SELECT_PROJECTION, "(photo_id = ?)",

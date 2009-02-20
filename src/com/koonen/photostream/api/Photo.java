@@ -30,6 +30,20 @@ public class Photo implements Parcelable, FlickrConstants {
 	public Photo() {
 	}
 
+	public Photo(Photo photo) {
+		id = photo.id;
+		photoId = photo.photoId;
+		secret = photo.secret;
+		server = photo.server;
+		farm = photo.farm;
+		title = photo.title;
+		date = photo.date;
+		tags = photo.tags;
+		urlPattern = photo.urlPattern;
+		sourceType = photo.sourceType;
+		userInfo = new UserInfo(photo.userInfo);
+	}
+	
 	protected Photo(Parcel in) {
 		id = in.readInt();
 		photoId = in.readString();

@@ -543,9 +543,32 @@ public class ViewPhotoActivity extends Activity implements
 		mSwitcher.showNext();
 	}
 
-	private void showMessage(int resId) {
-		Toast.makeText(ViewPhotoActivity.this, resId, Toast.LENGTH_SHORT)
-				.show();
+	private void showMessage(final int resId) {
+		showMessage(resId, Toast.LENGTH_SHORT);
+	}
+
+	private void showMessage(final String message, final int duration) {
+		handler.post(new Runnable() {
+
+			@Override
+			public void run() {
+				Toast.makeText(ViewPhotoActivity.this, message, duration)
+						.show();
+			}
+
+		});
+	}
+
+	private void showMessage(final int resId, final int duration) {
+		handler.post(new Runnable() {
+
+			@Override
+			public void run() {
+				Toast.makeText(ViewPhotoActivity.this, resId, duration).show();
+			}
+
+		});
+
 	}
 
 	private void showError() {
@@ -609,20 +632,9 @@ public class ViewPhotoActivity extends Activity implements
 				} catch (UserNotFoundException e) {
 					photoList = new PhotoList();
 					onSettings();
-					handler.post(new Runnable() {
-
-						@Override
-						public void run() {
-							Toast.makeText(
-									ViewPhotoActivity.this,
-									String.format(getResources().getString(
-											R.string.unknown_username),
-											userPreferences.getUserName()),
-									Toast.LENGTH_LONG).show();
-						}
-
-					});
-
+					showMessage(String.format(getResources().getString(
+							R.string.unknown_username), userPreferences
+							.getUserName()), Toast.LENGTH_LONG);
 				}
 				if (photoList != null && photoList.getCount() != 0) {
 					photo = photoList.get(0);
@@ -631,7 +643,8 @@ public class ViewPhotoActivity extends Activity implements
 			}
 
 			if (photo != null) {
-				bitmap = photo.loadPhotoBitmap(PhotoSize.MEDIUM);
+				bitmap = ServiceManager.get().getService().loadPhotoBitmap(
+						photo, PhotoSize.MEDIUM);
 			}
 			if (bitmap == null) {
 				bitmap = BitmapFactory.decodeResource(getResources(),

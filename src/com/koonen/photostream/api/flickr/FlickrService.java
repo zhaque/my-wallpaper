@@ -1,13 +1,18 @@
 package com.koonen.photostream.api.flickr;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -30,7 +35,10 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.MediaStore.Images.Media;
 import android.util.Log;
 import android.util.Xml;
 import android.view.InflateException;
@@ -47,8 +55,10 @@ import com.koonen.photostream.api.SourceType;
 import com.koonen.photostream.api.User;
 import com.koonen.photostream.api.UserInfo;
 import com.koonen.photostream.api.UserNotFoundException;
+import com.koonen.photostream.dao.ImageDAO;
 import com.koonen.photostream.dao.PhotoDAO;
 import com.koonen.photostream.settings.UserPreferences;
+import com.koonen.utils.StreamUtils;
 
 /**
  * 
@@ -65,12 +75,15 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 
 	private UserPreferences userPreferences;
 	private PhotoDAO photoDAO;
+	private ImageDAO imageDAO;
 
 	private HttpClient client;
 
-	public FlickrService(UserPreferences userPreferences, PhotoDAO photoDAO) {
+	public FlickrService(UserPreferences userPreferences, PhotoDAO photoDAO,
+			ImageDAO imageDAO) {
 		this.userPreferences = userPreferences;
 		this.photoDAO = photoDAO;
+		this.imageDAO = imageDAO;
 		userPreferences
 				.registerOnSharedPreferenceChangeListener(new OnSharedPreferenceChangeListener() {
 
@@ -743,14 +756,52 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 		photoList.setPageCount(perPage);
 		List<Photo> photos = null;
 		try {
-			photos = photoDAO.select((page - 1) * perPage, perPage);
+			photos = photoDAO.select(getStart(perPage, page), perPage);
 			for (Photo photo : photos) {
 				loadPhotoInfo(photo);
 			}
 			int totalCount = photoDAO.getTotalCount();
-			int pageCount = (totalCount / perPage)
-					+ (totalCount % perPage == 0 ? 0 : 1);
-			photoList.setPageCount(pageCount);
+			photoList.setPageCount(calculatePageCount(totalCount, perPage));
+		} catch (Exception e) {
+			android.util.Log.e(LOG_TAG, "Could not load favorite photos ");
+		}
+		photoList.setPhotos(photos);
+
+		return photoList;
+	}
+
+	private int getStart(int perPage, int page) {
+		return (page - 1) * perPage;
+	}
+
+	private int calculatePageCount(int totalCount, int perPage) {
+		return (totalCount / perPage) + (totalCount % perPage == 0 ? 0 : 1);
+	}
+
+	private PhotoList getFileSystemPhotos(Uri uri, int perPage, int page) {
+		PhotoList photoList = new PhotoList();
+
+		photoList.setPage(page);
+		photoList.setPageCount(perPage);
+		List<Photo> photos = null;
+		try {
+			photos = imageDAO.select(uri, getStart(perPage, page), perPage);
+			int removedItems = 0;
+			for (Iterator<Photo> i = photos.iterator(); i.hasNext();) {
+				Photo photo = i.next();
+				// TODO: url == null is bad
+				URL url = new URL(photo.getUrl(null));
+				File file = new File(url.getFile());
+				if (!file.canRead()) {
+					i.remove();
+					removedItems++;
+				}
+			}
+			// for (Photo photo : photos) {
+			// loadPhotoInfo(photo);
+			// }
+			int totalCount = imageDAO.getTotalCount(uri) - removedItems;
+			photoList.setPageCount(calculatePageCount(totalCount, perPage));
 		} catch (Exception e) {
 			android.util.Log.e(LOG_TAG, "Could not load favorite photos ");
 		}
@@ -781,41 +832,99 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 	}
 
 	/**
-	 * Downloads the specified photo at the specified size in the specified
-	 * destination.
+	 * Loads a Bitmap representing the photo for the specified size. The Bitmap
+	 * is loaded from the URL returned by
+	 * {@link #getUrl(com.koonen.photostream.Flickr.PhotoSize)}.
 	 * 
-	 * @param photo
-	 *            The photo to download.
 	 * @param size
-	 *            The size of the photo to download.
-	 * @param destination
-	 *            The output stream in which to write the downloaded photo.
+	 *            The size of the photo to load.
 	 * 
-	 * @throws IOException
-	 *             If any network exception occurs during the download.
+	 * @return A Bitmap whose longest size is the same as the longest side of
+	 *         the specified {@link com.koonen.photostream.Flickr.PhotoSize}, or
+	 *         null if the photo could not be loaded.
 	 */
-	public void downloadPhoto(Photo photo, PhotoSize size,
-			OutputStream destination) throws IOException {
-		final BufferedOutputStream out = new BufferedOutputStream(destination,
-				IO_BUFFER_SIZE);
-		final String url = photo.getUrl(size);
+	public Bitmap loadPhotoBitmap(Photo photo, PhotoSize size) {
+		Bitmap bitmap = null;
+		InputStream in = null;
+		BufferedOutputStream out = null;
 
-		final HttpGet get = new HttpGet(url);
-
-		HttpEntity entity = null;
 		try {
-			final HttpResponse response = client.execute(get);
-			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				entity = response.getEntity();
-				entity.writeTo(out);
-				out.flush();
+			URL url = new URL(photo.getUrl(size));
+			if (url.getHost() == null) {
+				if (url.getFile() != null) {
+					File file = new File(url.getFile());
+					if (file.canRead()) {
+						in = new BufferedInputStream(new FileInputStream(file));
+					}
+
+				}
+			} else {
+				in = new BufferedInputStream(url.openStream(), IO_BUFFER_SIZE);
 			}
+
+			if (in != null) {
+				if (FLAG_DECODE_PHOTO_STREAM_WITH_SKIA) {
+					bitmap = BitmapFactory.decodeStream(in);
+				} else {
+					final ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+					out = new BufferedOutputStream(dataStream, IO_BUFFER_SIZE);
+					StreamUtils.copy(in, out);
+					out.flush();
+
+					final byte[] data = dataStream.toByteArray();
+					bitmap = BitmapFactory
+							.decodeByteArray(data, 0, data.length);
+				}
+			} else {
+				Log.w(LOG_TAG, "Can't load photo - no file and no url");
+			}
+
+		} catch (IOException e) {
+			Log.e(LOG_TAG, "Could not load photo: " + this, e);
 		} finally {
-			if (entity != null) {
-				entity.consumeContent();
-			}
+			StreamUtils.closeStream(in);
+			StreamUtils.closeStream(out);
 		}
+
+		return bitmap;
 	}
+
+	// /**
+	// * Downloads the specified photo at the specified size in the specified
+	// * destination.
+	// *
+	// * @param photo
+	// * The photo to download.
+	// * @param size
+	// * The size of the photo to download.
+	// * @param destination
+	// * The output stream in which to write the downloaded photo.
+	// *
+	// * @throws IOException
+	// * If any network exception occurs during the download.
+	// */
+	// public void downloadPhoto(Photo photo, PhotoSize size,
+	// OutputStream destination) throws IOException {
+	// final BufferedOutputStream out = new BufferedOutputStream(destination,
+	// IO_BUFFER_SIZE);
+	// final String url = photo.getUrl(size);
+	//
+	// final HttpGet get = new HttpGet(url);
+	//
+	// HttpEntity entity = null;
+	// try {
+	// final HttpResponse response = client.execute(get);
+	// if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+	// entity = response.getEntity();
+	// entity.writeTo(out);
+	// out.flush();
+	// }
+	// } finally {
+	// if (entity != null) {
+	// entity.consumeContent();
+	// }
+	// }
+	// }
 
 	public PhotoList execute(ServiceContext context)
 			throws ServiceNetworkException, UserNotFoundException {
@@ -838,6 +947,15 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 
 		case FAVORITES:
 			result = getFavoritePhotos(perPage, page);
+			break;
+
+		case FILE_SYSTEM_INT:
+			result = getFileSystemPhotos(Media.INTERNAL_CONTENT_URI, perPage,
+					page);
+			break;
+		case FILE_SYSTEM_EXT:
+			result = getFileSystemPhotos(Media.EXTERNAL_CONTENT_URI, perPage,
+					page);
 			break;
 		default:
 			break;

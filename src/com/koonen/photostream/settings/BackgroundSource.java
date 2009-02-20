@@ -15,11 +15,17 @@ public class BackgroundSource extends Enumeration {
 			"personal", "personal");
 	public static final BackgroundSource FAVORITES = new BackgroundSource(
 			"favorites", "favorites");
+	public static final BackgroundSource FILE_SYSTEM_INTERNAL = new BackgroundSource(
+			"telephone", "telephone");
+	public static final BackgroundSource FILE_SYSTEM_EXTERNAL = new BackgroundSource(
+			"sdcard", "sdcard");
 
 	static {
 		add(BackgroundSource.class, RANDOM);
 		add(BackgroundSource.class, PERSONAL);
 		add(BackgroundSource.class, FAVORITES);
+		add(BackgroundSource.class, FILE_SYSTEM_INTERNAL);
+		add(BackgroundSource.class, FILE_SYSTEM_EXTERNAL);
 	}
 
 	public static BackgroundSource valueOf(String name) {

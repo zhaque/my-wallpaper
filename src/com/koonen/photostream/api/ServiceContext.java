@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import com.koonen.photostream.dao.Category;
-
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.MediaStore.Images.Media;
+
+import com.koonen.photostream.dao.Category;
 
 /**
  * 
@@ -112,6 +114,28 @@ public class ServiceContext implements Parcelable {
 		return result;
 	}
 
+	public static ServiceContext createInternalContext(int pageSize) {
+		ServiceContext result = createFileSystemContext(Media.INTERNAL_CONTENT_URI, pageSize);
+		result.type = Type.FILE_SYSTEM_INT;
+		result.setScreenName("Telephone memory");
+		return result;
+	}
+	
+	public static ServiceContext createExternalContext(int pageSize) {
+		ServiceContext result = createFileSystemContext(Media.EXTERNAL_CONTENT_URI, pageSize);
+		result.type = Type.FILE_SYSTEM_EXT;
+		result.setScreenName("SDCard");
+		return result;
+	}
+	
+	private static ServiceContext createFileSystemContext(Uri uri, int pageSize) {
+		ServiceContext result = new ServiceContext();
+		result.setPagable(true);
+		result.setPageSize(pageSize);
+		result.setCurrentPage(1);
+		return result;
+	}
+	
 	public ServiceContext() {
 		extra = new HashMap<String, String>();
 	}

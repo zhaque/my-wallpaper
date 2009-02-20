@@ -138,6 +138,10 @@ public class RotationService extends Service {
 						} else if (source == BackgroundSource.PERSONAL) {
 							serviceContext = ServiceContext
 									.createPersonalContext(1);
+						} else if (source == BackgroundSource.FILE_SYSTEM_INTERNAL) {
+							serviceContext = ServiceContext.createInternalContext(1);
+						} else if (source == BackgroundSource.FILE_SYSTEM_EXTERNAL) {
+							serviceContext = ServiceContext.createExternalContext(1);
 						}
 					} else {
 						if (serviceContext.isNext()) {

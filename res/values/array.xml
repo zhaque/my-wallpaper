@@ -50,12 +50,16 @@
 		<item>My Favorites</item>
 		<item>Personal</item>
 		<item>Random</item>
+		<item>Telephone</item>
+		<item>SDCard</item>
 	</string-array>
 
 	<string-array name="photo_source_type_values">
 		<item>favorites</item>
 		<item>personal</item>
 		<item>random</item>
+		<item>telephone</item>
+		<item>sdcard</item>
 	</string-array>
 
 	<string-array name="network_names">

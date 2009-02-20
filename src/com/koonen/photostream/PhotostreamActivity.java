@@ -598,7 +598,8 @@ public class PhotostreamActivity extends Activity implements
 					break;
 
 				final Photo photo = list.get(i);
-				Bitmap bitmap = photo.loadPhotoBitmap(PhotoSize.THUMBNAIL);
+				Bitmap bitmap = ServiceManager.get().getService()
+						.loadPhotoBitmap(photo, PhotoSize.THUMBNAIL);
 				if (!isCancelled()) {
 					if (bitmap == null) {
 						final boolean portrait = mRandom.nextFloat() >= 0.5f;

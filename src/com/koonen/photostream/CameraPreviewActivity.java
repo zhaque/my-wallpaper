@@ -1,6 +1,5 @@
 package com.koonen.photostream;
 
-import java.io.FileOutputStream;
 import java.util.concurrent.Semaphore;
 
 import android.app.Activity;
@@ -8,16 +7,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Bitmap.CompressFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.Window;
+
+import com.koonen.utils.StreamUtils;
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +28,7 @@ import android.view.Window;
 public class CameraPreviewActivity extends Activity {
 	private Preview mPreview;
 
-	private static final String TAG = CameraPreviewActivity.class.getName();
+//	private static final String TAG = CameraPreviewActivity.class.getName();
 
 	public static final String PHOTO_FROM_CAMERA = "camera.jpg";
 	public static final int REQUEST_SHOW_FILE_SYSTEM_PHOTO = 44;
@@ -72,18 +71,8 @@ public class CameraPreviewActivity extends Activity {
 
 					}
 					Bitmap bitmap = mPreview.getPicture();
-					try {
-						FileOutputStream fos = CameraPreviewActivity.this
-								.openFileOutput(PHOTO_FROM_CAMERA,
-										MODE_WORLD_READABLE);
-
-						bitmap.compress(CompressFormat.JPEG, 100, fos);
-
-						fos.flush();
-						fos.close();
-					} catch (Exception e) {
-						Log.e(TAG, e.toString());
-					}
+					StreamUtils.saveBitmap(CameraPreviewActivity.this, bitmap,
+							PHOTO_FROM_CAMERA);
 					setResult(RESPONSE_FILE_SYSTEM_PHOTO);
 					finish();
 				}

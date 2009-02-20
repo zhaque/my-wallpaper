@@ -1,7 +1,6 @@
 package com.koonen.photostream.api;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import android.graphics.Bitmap;
 
 /**
  * 
@@ -10,8 +9,10 @@ import java.io.OutputStream;
  */
 public interface IPhotoService {
 
-	public void downloadPhoto(Photo photo, PhotoSize size,
-			OutputStream destination) throws IOException;
+//	public void downloadPhoto(Photo photo, PhotoSize size,
+//			OutputStream destination) throws IOException;
+	
+	public Bitmap loadPhotoBitmap(Photo photo, PhotoSize size);
 
 	public PhotoList execute(ServiceContext context)
 			throws ServiceNetworkException, UserNotFoundException;

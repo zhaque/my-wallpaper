@@ -1,6 +1,7 @@
 package com.koonen.photostream.api;
 
 import com.koonen.photostream.api.flickr.FlickrService;
+import com.koonen.photostream.dao.ImageDAO;
 import com.koonen.photostream.dao.PhotoDAO;
 import com.koonen.photostream.settings.Network;
 import com.koonen.photostream.settings.UserPreferences;
@@ -19,8 +20,10 @@ public class ServiceManager {
 	private UserPreferences userPreferences;
 
 	private FlickrService flickrService;
-	
+
 	private PhotoDAO photoDAO;
+
+	private ImageDAO imageDAO;
 
 	private static ServiceManager instance;
 
@@ -38,6 +41,7 @@ public class ServiceManager {
 		this.context = context;
 		userPreferences = new UserPreferences(this.context);
 		photoDAO = new PhotoDAO(this.context);
+		imageDAO = new ImageDAO(this.context);
 	}
 
 	public IPhotoService getService() {
@@ -52,7 +56,8 @@ public class ServiceManager {
 
 	private FlickrService getFlickrService() {
 		if (flickrService == null) {
-			flickrService = new FlickrService(userPreferences, photoDAO);
+			flickrService = new FlickrService(userPreferences, photoDAO,
+					imageDAO);
 		}
 		return flickrService;
 	}

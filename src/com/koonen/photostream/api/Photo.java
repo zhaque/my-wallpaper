@@ -1,22 +1,9 @@
 package com.koonen.photostream.api;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.koonen.photostream.api.flickr.FlickrConstants;
-import com.koonen.utils.StreamUtils;
 
 /**
  * A photo is represented by a title, the date at which it was taken and a URL.
@@ -24,7 +11,7 @@ import com.koonen.utils.StreamUtils;
  * {@link com.koonen.photostream.Flickr.PhotoSize}.
  */
 public class Photo implements Parcelable, FlickrConstants {
-	private static final String TAG = "Photo";
+//	private static final String TAG = "Photo";
 
 	private int id;
 	private String photoId;
@@ -88,64 +75,6 @@ public class Photo implements Parcelable, FlickrConstants {
 	 */
 	public String getUrl(PhotoSize photoSize) {
 		return String.format(urlPattern, photoSize.size());
-	}
-
-	/**
-	 * Loads a Bitmap representing the photo for the specified size. The Bitmap
-	 * is loaded from the URL returned by
-	 * {@link #getUrl(com.koonen.photostream.Flickr.PhotoSize)}.
-	 * 
-	 * @param size
-	 *            The size of the photo to load.
-	 * 
-	 * @return A Bitmap whose longest size is the same as the longest side of
-	 *         the specified {@link com.koonen.photostream.Flickr.PhotoSize},
-	 *         or null if the photo could not be loaded.
-	 */
-	public Bitmap loadPhotoBitmap(PhotoSize size) {
-		Bitmap bitmap = null;
-		InputStream in = null;
-		BufferedOutputStream out = null;
-
-		try {
-			URL url = new URL(getUrl(size));
-			if (url.getHost() == null) {
-				if (url.getFile() != null) {
-					File file = new File(url.getFile());
-					if (file.canRead()) {
-						in = new BufferedInputStream(new FileInputStream(file));
-					}
-
-				}
-			} else {
-				in = new BufferedInputStream(url.openStream(), IO_BUFFER_SIZE);
-			}
-
-			if (in != null) {
-				if (FLAG_DECODE_PHOTO_STREAM_WITH_SKIA) {
-					bitmap = BitmapFactory.decodeStream(in);
-				} else {
-					final ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
-					out = new BufferedOutputStream(dataStream, IO_BUFFER_SIZE);
-					StreamUtils.copy(in, out);
-					out.flush();
-
-					final byte[] data = dataStream.toByteArray();
-					bitmap = BitmapFactory
-							.decodeByteArray(data, 0, data.length);
-				}
-			} else {
-				Log.w(TAG, "Can't load photo - no file and no url");
-			}
-
-		} catch (IOException e) {
-			Log.e(TAG, "Could not load photo: " + this, e);
-		} finally {
-			StreamUtils.closeStream(in);
-			StreamUtils.closeStream(out);
-		}
-
-		return bitmap;
 	}
 
 	@Override

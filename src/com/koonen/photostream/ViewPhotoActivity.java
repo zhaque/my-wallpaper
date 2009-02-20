@@ -466,25 +466,20 @@ public class ViewPhotoActivity extends Activity implements
 	}
 
 	private void onFavorite() {
-		boolean suceess = false;
 		if (photoExist) {
 			photoDAO.delete(mPhoto);
+			deleteFile(mPhoto.getId() + ".jpg");
 			showMessage(R.string.photo_favorite_delete_successfully);
 		} else {
 			photoDAO.insert(mPhoto);
-			Photo photo = photoDAO.selectByPhotoId(mPhoto.getPhotoId());
+			showMessage(R.string.photo_favorite_save_successfully);
 
+			Photo photo = photoDAO.selectByPhotoId(mPhoto.getPhotoId());
 			if (photo != null) {
-				suceess = StreamUtils
+				StreamUtils
 						.saveBitmap(this, ((BitmapDrawable) mPhotoView
 								.getDrawable()).getBitmap(), photo.getId()
 								+ ".jpg");
-			}
-
-			if (suceess) {
-				showMessage(R.string.photo_favorite_save_successfully);
-			} else {
-				showMessage(R.string.photo_favorite_save_fail);
 			}
 		}
 	}

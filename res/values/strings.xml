@@ -85,7 +85,7 @@
 		Also play ringtone when new photos are available
 	</string>
 
-	<string name="user_preferences_group">Group</string>
+	<string name="user_preferences_group">Select group</string>
 	<string name="user_preferences_change_automaticaly">
 		Enable Rotation
 	</string>
@@ -129,16 +129,16 @@
 	<string name="disclaimer_title">Disclaimer</string>
 	<string name="disclaimer_accept">Accept</string>
 
-	<string name="menu_personal">Personal</string>
+	<string name="menu_personal">My Network</string>
 	<string name="menu_my_favorites">My favorites</string>
 	<string name="menu_search">Search</string>
-	<string name="menu_take_picture">Take picture</string>
+	<string name="menu_take_picture">My Photos</string>
 	<string name="menu_settings">Settings</string>
 	<string name="menu_categories">My Tags</string>
 
 	<string name="dialog_categories_name">Categories list</string>
 	<string name="dialog_search">Search</string>
-	<string name="dialog_take_photo">Take photo</string>
+	<string name="dialog_take_photo">Select or take photos</string>
 	<string name="dialog_share">Share Photo</string>
 	<string name="dialog_share_error">Sorry, Can\'t share photo</string>
 	<string name="dialog_category">Category</string>
@@ -216,6 +216,6 @@
 	</string>
 	
 	<string name="category_first_open">
-		Press the Menu to manage your tags with using keywords of your choice
+		Press the Menu to manage your tags with keywords
 	</string>
 </resources>

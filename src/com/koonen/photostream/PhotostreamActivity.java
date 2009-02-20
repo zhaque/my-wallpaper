@@ -238,14 +238,14 @@ public class PhotostreamActivity extends Activity implements
 		menu.add(0, MENU_ITEM_MY_FAVORITES, 0, R.string.menu_my_favorites)
 				.setIcon(R.drawable.ic_menu_favorite);
 		menu.add(0, MENU_ITEM_CATEGORIES, 1, R.string.menu_categories).setIcon(
-				R.drawable.ic_menu_category);
+				R.drawable.ic_menu_my_tags);
 		menu.add(0, MENU_ITEM_TAKE_PICTURE, 2, R.string.menu_take_picture)
 				.setIcon(R.drawable.ic_menu_photo);
 
 		menu.add(0, MENU_ITEM_SEARCH, 3, R.string.menu_search).setIcon(
 				R.drawable.ic_menu_search);
 		menu.add(0, MENU_ITEM_PERSONAL, 4, R.string.menu_personal).setIcon(
-				R.drawable.ic_menu_personal);
+				R.drawable.ic_menu_my_network);
 		menu.add(0, MENU_ITEM_SETTINGS, 5, R.string.menu_settings).setIcon(
 				R.drawable.ic_menu_settings);
 		return true;

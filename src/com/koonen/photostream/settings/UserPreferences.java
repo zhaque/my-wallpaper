@@ -99,7 +99,7 @@ public class UserPreferences {
 	}
 
 	public String getGroup() {
-		return preferences.getString(GROUP_NAME_KEY, "94834891@N00");
+		return preferences.getString(GROUP_NAME_KEY, "344828@N24");
 	}
 
 }

@@ -15,10 +15,10 @@
 		<EditTextPreference android:title="@string/user_preferences_name"
 			android:key="photostream.networkUsername" android:dependency="photostream.enable-network" />
 
-		<ListPreference android:dialogTitle="" android:key="photostream.groupName"
-			android:title="@string/user_preferences_group" android:entries="@array/group_names"
-			android:entryValues="@array/group_values" android:dependency="photostream.enable-network"
-			android:defaultValue="94834891@N00" />
+		<ListPreference android:dialogTitle=""
+			android:key="photostream.groupName" android:title="@string/user_preferences_group"
+			android:entries="@array/group_names" android:entryValues="@array/group_values"
+			android:dependency="photostream.enable-network" android:defaultValue="344828@N24" />
 
 	</PreferenceCategory>
 
@@ -47,14 +47,17 @@
 			android:defaultValue="false" />
 	</PreferenceCategory>
 
-	<ListPreference android:dialogTitle=""
-		android:key="photostream.images_per_request" android:title="@string/user_preferences_images_per_request"
-		android:entries="@array/images_per_request_names" android:entryValues="@array/images_per_request_names"
-		android:defaultValue="6" />
+	<PreferenceCategory android:title="Display">
+		<ListPreference android:dialogTitle=""
+			android:key="photostream.images_per_request" android:title="@string/user_preferences_images_per_request"
+			android:entries="@array/images_per_request_names"
+			android:entryValues="@array/images_per_request_names"
+			android:defaultValue="6" />
 
-	<ListPreference android:dialogTitle=""
-		android:key="photostream.effects" android:title="@string/user_preferences_effects_title"
-		android:entries="@array/effects_names" android:entryValues="@array/effects_values"
-		android:defaultValue="random" />
+		<ListPreference android:dialogTitle=""
+			android:key="photostream.effects" android:title="@string/user_preferences_effects_title"
+			android:entries="@array/effects_names" android:entryValues="@array/effects_values"
+			android:defaultValue="random" />
+	</PreferenceCategory>
 
 </PreferenceScreen>

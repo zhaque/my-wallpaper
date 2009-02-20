@@ -60,7 +60,7 @@ public class ServiceContext implements Parcelable {
 		result.setPageSize(pageSize);
 		result.setCurrentPage(1);
 		result.type = Type.PERSONAL;
-		result.setScreenName("Personal photos");
+		result.setScreenName("My network photos");
 		return result;
 	}
 
@@ -87,7 +87,8 @@ public class ServiceContext implements Parcelable {
 		}
 		result.setQuery(serviceContext.getQuery());
 		result.type = serviceContext.getType();
-		result.setScreenName(serviceContext.getScreenName());
+		//result.setScreenName(serviceContext.getScreenName());
+		result.setScreenName("Make this your wallpaper!");
 		return result;
 	}
 
@@ -97,7 +98,7 @@ public class ServiceContext implements Parcelable {
 		result.setPageSize(pageSize);
 		result.setCurrentPage(1);
 		result.type = Type.FAVORITES;
-		result.setScreenName("Favorites photos");
+		result.setScreenName("My favorites photos");
 		return result;
 	}
 

@@ -792,7 +792,7 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 				// TODO: url == null is bad
 				URL url = new URL(photo.getUrl(null));
 				File file = new File(url.getFile());
-				if (!file.canRead()) {
+				if (!file.exists() || !file.canRead()) {
 					i.remove();
 					removedItems++;
 				}

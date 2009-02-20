@@ -189,4 +189,8 @@ public class Photo implements Parcelable, FlickrConstants {
 	public void setUserInfo(UserInfo userInfo) {
 		this.userInfo = userInfo;
 	}
+	
+	public boolean isScaled() {
+		return false;
+	}
 }

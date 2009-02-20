@@ -6,16 +6,16 @@ import android.os.Parcelable;
 /**
  * 
  * @author Glick
- *
+ * 
  */
 public class FilePhoto extends Photo {
 
 	private String path;
-	
+
 	public FilePhoto(String path) {
 		this.path = path;
 	}
-	
+
 	private FilePhoto(Parcel in) {
 		path = in.readString();
 	}
@@ -23,6 +23,11 @@ public class FilePhoto extends Photo {
 	@Override
 	public String getUrl(PhotoSize photoSize) {
 		return path;
+	}
+
+	@Override
+	public boolean isScaled() {
+		return true;
 	}
 
 	@Override

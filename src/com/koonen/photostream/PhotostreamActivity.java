@@ -347,6 +347,8 @@ public class PhotostreamActivity extends Activity implements
 		}
 
 		case DIALOG_TAKE_PHOTO: {
+			final UserPreferences preferences = new UserPreferences(this);
+
 			return new AlertDialog.Builder(PhotostreamActivity.this).setTitle(
 					R.string.dialog_take_photo).setItems(
 					R.array.take_photo_menu_items,
@@ -357,8 +359,20 @@ public class PhotostreamActivity extends Activity implements
 								onCameraPreview();
 								break;
 							case 1:
-								FileBrowserActivity
-										.show(PhotostreamActivity.this);
+								serviceContext = ServiceContext
+										.createInternalContext(preferences
+												.getImagesPerRequest());
+								animateAndLoadPhotos(mNextAnimation);
+								// FileBrowserActivity
+								// .show(PhotostreamActivity.this);
+								break;
+							case 2:
+								serviceContext = ServiceContext
+										.createExternalContext(preferences
+												.getImagesPerRequest());
+								animateAndLoadPhotos(mNextAnimation);
+								// FileBrowserActivity
+								// .show(PhotostreamActivity.this);
 								break;
 							default:
 								dialog.dismiss();
@@ -607,6 +621,12 @@ public class PhotostreamActivity extends Activity implements
 								portrait ? R.drawable.not_found_small_1
 										: R.drawable.not_found_small_2);
 					}
+					if (photo.isScaled()) {
+						double k = 100.0 / bitmap.getWidth();
+						int height = (int) (k * bitmap.getHeight());
+						bitmap = Bitmap.createScaledBitmap(bitmap, 100, height,
+								true);
+					}
 					publishProgress(new LoadedPhoto(ImageUtilities
 							.rotateAndFrame(bitmap), photo));
 					bitmap.recycle();
@@ -732,4 +752,16 @@ public class PhotostreamActivity extends Activity implements
 			mPhoto = photo;
 		}
 	}
+
+	// private static void showFiles(Activity context, ServiceContext
+	// serviceContext) {
+	// final Intent intent = new Intent(context, PhotostreamActivity.class);
+	// intent.putExtra(STATE_CONTEXT, serviceContext);
+	// intent.putExtra(STATE_SHOW_SPLASH, false);
+	// context.startActivityForResult(intent, FILE_S);
+	// }
+	//	
+	// private static void showInternalFiles(Activity context) {
+	// showFiles(context, ServiceContext.createInternalContext(pageSize));
+	// }
 }

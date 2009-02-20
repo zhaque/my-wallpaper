@@ -15,5 +15,6 @@ public class ActivityConstants {
 	static final int RESULT_CATEGORY_SEARCH = 12;
 	
 	static final int SIMILAR_RESPONSE_ID = 1;
-
+	
+	static final int FILE_SYSTEM_PHOTO_REQUEST_ID = 101;
 }

@@ -72,7 +72,8 @@
 
 	<string-array name="take_photo_menu_items">
 		<item>From Camera</item>
-		<item>From File</item>
+		<item>From Telephone</item>
+		<item>From SDCard</item>
 		<item>Cancel</item>
 	</string-array>
 

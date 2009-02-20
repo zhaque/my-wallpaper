@@ -26,6 +26,7 @@ public class ServiceContext implements Parcelable {
 	private int countPages;
 	private int currentPage;
 	private int pageSize;
+	private int countPhotos;
 	private Map<String, String> extra;
 
 	private String query;
@@ -70,8 +71,15 @@ public class ServiceContext implements Parcelable {
 		result.setCurrentPage(serviceContext.getPageSize()
 				* (serviceContext.getCurrentPage() - 1) + photoPageNumber + 1);
 		result.setPageSize(1);
-		result.setCountPages(serviceContext.getPageSize()
-				* serviceContext.getCountPages());
+		int countPages;
+		if (serviceContext.getCountPages() == 1) {
+			countPages = serviceContext.getCountPhotos();
+		} else {
+			countPages = serviceContext.getPageSize()
+					* serviceContext.getCountPages();
+		}
+		result.setCountPages(countPages);
+
 		for (Iterator<String> iterator = serviceContext.extra.keySet()
 				.iterator(); iterator.hasNext();) {
 			String name = (String) iterator.next();
@@ -102,8 +110,9 @@ public class ServiceContext implements Parcelable {
 		result.setScreenName("Photo from camera");
 		return result;
 	}
-	
-	public static ServiceContext createCategoryContext(Category category, int pageSize) {
+
+	public static ServiceContext createCategoryContext(Category category,
+			int pageSize) {
 		ServiceContext result = null;
 		if (category.isRecent()) {
 			result = createRecentContext(pageSize);
@@ -115,19 +124,21 @@ public class ServiceContext implements Parcelable {
 	}
 
 	public static ServiceContext createInternalContext(int pageSize) {
-		ServiceContext result = createFileSystemContext(Media.INTERNAL_CONTENT_URI, pageSize);
+		ServiceContext result = createFileSystemContext(
+				Media.INTERNAL_CONTENT_URI, pageSize);
 		result.type = Type.FILE_SYSTEM_INT;
 		result.setScreenName("Telephone memory");
 		return result;
 	}
-	
+
 	public static ServiceContext createExternalContext(int pageSize) {
-		ServiceContext result = createFileSystemContext(Media.EXTERNAL_CONTENT_URI, pageSize);
+		ServiceContext result = createFileSystemContext(
+				Media.EXTERNAL_CONTENT_URI, pageSize);
 		result.type = Type.FILE_SYSTEM_EXT;
 		result.setScreenName("SDCard");
 		return result;
 	}
-	
+
 	private static ServiceContext createFileSystemContext(Uri uri, int pageSize) {
 		ServiceContext result = new ServiceContext();
 		result.setPagable(true);
@@ -135,7 +146,7 @@ public class ServiceContext implements Parcelable {
 		result.setCurrentPage(1);
 		return result;
 	}
-	
+
 	public ServiceContext() {
 		extra = new HashMap<String, String>();
 	}
@@ -287,8 +298,16 @@ public class ServiceContext implements Parcelable {
 	public boolean isPrev() {
 		return currentPage > 1;
 	}
-	
+
 	public boolean isRecent() {
 		return type == Type.RECENT;
+	}
+
+	public int getCountPhotos() {
+		return countPhotos;
+	}
+
+	public void setCountPhotos(int countPhotos) {
+		this.countPhotos = countPhotos;
 	}
 }

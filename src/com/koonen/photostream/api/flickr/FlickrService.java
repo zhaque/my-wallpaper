@@ -977,6 +977,7 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 
 		if (result != null) {
 			context.setCountPages(result.getPageCount());
+			context.setCountPhotos(result.getCount());
 		}
 
 		return result;

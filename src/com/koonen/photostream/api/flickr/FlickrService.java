@@ -69,6 +69,8 @@ import com.koonen.utils.StreamUtils;
  */
 public class FlickrService implements IPhotoService, FlickrConstants {
 
+	public static final int MAX_FILE_SIZE = 1024 * 900;
+
 	static final String LOG_TAG = "Photostream";
 
 	private static final int RECONNECT_COUNT = 3;
@@ -767,13 +769,14 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 				loadPhotoInfo(photo);
 				File file = context.getFileStreamPath(photo.getId() + ".jpg");
 				if (file.exists() && file.canRead()) {
-					FilePhoto filePhoto = new FilePhoto(photo, file.toURI().toString());
+					FilePhoto filePhoto = new FilePhoto(photo, file.toURI()
+							.toString());
 					cachedPhotos.add(filePhoto);
 				} else {
 					cachedPhotos.add(photo);
 				}
 			}
-			
+
 			int totalCount = photoDAO.getTotalCount();
 			photoList.setPageCount(calculatePageCount(totalCount, perPage));
 		} catch (Exception e) {
@@ -803,17 +806,14 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 			int removedItems = 0;
 			for (Iterator<Photo> i = photos.iterator(); i.hasNext();) {
 				Photo photo = i.next();
-				// TODO: url == null is bad
 				URL url = new URL(photo.getUrl(null));
 				File file = new File(url.getFile());
-				if (!file.exists() || !file.canRead()) {
+				if (!file.exists() || !file.canRead()
+						|| file.length() > MAX_FILE_SIZE) {
 					i.remove();
 					removedItems++;
 				}
 			}
-			// for (Photo photo : photos) {
-			// loadPhotoInfo(photo);
-			// }
 			int totalCount = imageDAO.getTotalCount(uri) - removedItems;
 			photoList.setPageCount(calculatePageCount(totalCount, perPage));
 		} catch (Exception e) {
@@ -864,6 +864,26 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 
 		try {
 			URL url = new URL(photo.getUrl(size));
+			// if (photo instanceof FilePhoto) {
+			// File file = new File(url.getFile());
+			// if (file.exists() && file.canRead() && file.length() < 1024 *
+			// 1024) {
+			// Options options = new Options();
+			// options.inJustDecodeBounds = false;
+			// options.outHeight = 200;
+			// options.outWidth = 200;
+			// options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+			// bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(),
+			// options);
+			// // BitmapDrawable drawable = new BitmapDrawable(file
+			// // .getAbsolutePath());
+			// // if (drawable != null) {
+			// // bitmap = drawable.getBitmap();
+			// // }
+			// }
+			// }
+			// else
+			// {
 			if (url.getHost() == null) {
 				if (url.getFile() != null) {
 					File file = new File(url.getFile());
@@ -892,7 +912,7 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 			} else {
 				Log.w(LOG_TAG, "Can't load photo - no file and no url");
 			}
-
+			// }
 		} catch (IOException e) {
 			Log.e(LOG_TAG, "Could not load photo: " + this, e);
 		} finally {

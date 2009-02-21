@@ -620,12 +620,13 @@ public class PhotostreamActivity extends Activity implements
 						bitmap = BitmapFactory.decodeResource(getResources(),
 								portrait ? R.drawable.not_found_small_1
 										: R.drawable.not_found_small_2);
-					}
-					if (photo.isScaled()) {
-						double k = 100.0 / bitmap.getWidth();
-						int height = (int) (k * bitmap.getHeight());
-						bitmap = Bitmap.createScaledBitmap(bitmap, 100, height,
-								true);
+					} else {
+						if (photo.isScaled()) {
+							double k = 100.0 / bitmap.getWidth();
+							int height = (int) (k * bitmap.getHeight());
+							bitmap = Bitmap.createScaledBitmap(bitmap, 100,
+									height, true);
+						}
 					}
 					publishProgress(new LoadedPhoto(ImageUtilities
 							.rotateAndFrame(bitmap), photo));

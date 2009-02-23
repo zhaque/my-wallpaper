@@ -11,7 +11,7 @@ import com.koonen.photostream.api.flickr.FlickrConstants;
  * {@link com.koonen.photostream.Flickr.PhotoSize}.
  */
 public class Photo implements Parcelable, FlickrConstants {
-//	private static final String TAG = "Photo";
+	// private static final String TAG = "Photo";
 
 	private int id;
 	private String photoId;
@@ -28,6 +28,7 @@ public class Photo implements Parcelable, FlickrConstants {
 	private SourceType sourceType;
 
 	public Photo() {
+		userInfo = new UserInfo();
 	}
 
 	public Photo(Photo photo) {
@@ -43,7 +44,7 @@ public class Photo implements Parcelable, FlickrConstants {
 		sourceType = photo.sourceType;
 		userInfo = new UserInfo(photo.userInfo);
 	}
-	
+
 	protected Photo(Parcel in) {
 		id = in.readInt();
 		photoId = in.readString();
@@ -54,7 +55,10 @@ public class Photo implements Parcelable, FlickrConstants {
 		date = in.readString();
 		tags = in.readString();
 		urlPattern = in.readString();
-		sourceType = SourceType.valueOf(in.readString());
+		String val = in.readString();
+		if (val != null) {
+			sourceType = SourceType.valueOf(val);
+		}
 		userInfo = new UserInfo(in);
 	}
 
@@ -110,7 +114,7 @@ public class Photo implements Parcelable, FlickrConstants {
 		dest.writeString(date);
 		dest.writeString(tags);
 		dest.writeString(urlPattern);
-		dest.writeString(sourceType.getValue());
+		dest.writeString(sourceType == null ? null : sourceType.getValue());
 		userInfo.writeToParcel(dest, flags);
 	}
 
@@ -203,7 +207,7 @@ public class Photo implements Parcelable, FlickrConstants {
 	public void setUserInfo(UserInfo userInfo) {
 		this.userInfo = userInfo;
 	}
-	
+
 	public boolean isScaled() {
 		return false;
 	}

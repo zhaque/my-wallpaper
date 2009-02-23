@@ -38,6 +38,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
 import android.net.Uri;
 import android.provider.MediaStore.Images.Media;
 import android.util.Log;
@@ -808,8 +809,7 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 				Photo photo = i.next();
 				URL url = new URL(photo.getUrl(null));
 				File file = new File(url.getFile());
-				if (!file.exists() || !file.canRead()
-						|| file.length() > MAX_FILE_SIZE) {
+				if (!file.exists() || !file.canRead()) {
 					i.remove();
 					removedItems++;
 				}
@@ -864,55 +864,57 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 
 		try {
 			URL url = new URL(photo.getUrl(size));
-			// if (photo instanceof FilePhoto) {
-			// File file = new File(url.getFile());
-			// if (file.exists() && file.canRead() && file.length() < 1024 *
-			// 1024) {
-			// Options options = new Options();
-			// options.inJustDecodeBounds = false;
-			// options.outHeight = 200;
-			// options.outWidth = 200;
-			// options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-			// bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(),
-			// options);
-			// // BitmapDrawable drawable = new BitmapDrawable(file
-			// // .getAbsolutePath());
-			// // if (drawable != null) {
-			// // bitmap = drawable.getBitmap();
-			// // }
-			// }
-			// }
-			// else
-			// {
-			if (url.getHost() == null) {
-				if (url.getFile() != null) {
-					File file = new File(url.getFile());
-					if (file.canRead()) {
-						in = new BufferedInputStream(new FileInputStream(file));
+			if (photo instanceof FilePhoto) {
+				File file = new File(url.getFile());
+				if (file.exists() && file.canRead()) {// && file.length() < 1024
+														// * 1024
+					Options options = new Options();
+					// options.inJustDecodeBounds = false;
+					options.outHeight = 200;
+					options.outWidth = 200;
+					options.inSampleSize = 4;
+					// options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+					bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(),
+							options);
+					// BitmapDrawable drawable = new BitmapDrawable(file
+					// .getAbsolutePath());
+					// if (drawable != null) {
+					// bitmap = drawable.getBitmap();
+					// }
+				}
+			} else {
+				if (url.getHost() == null) {
+					if (url.getFile() != null) {
+						File file = new File(url.getFile());
+						if (file.canRead()) {
+							in = new BufferedInputStream(new FileInputStream(
+									file));
+						}
+
 					}
-
-				}
-			} else {
-				in = new BufferedInputStream(url.openStream(), IO_BUFFER_SIZE);
-			}
-
-			if (in != null) {
-				if (FLAG_DECODE_PHOTO_STREAM_WITH_SKIA) {
-					bitmap = BitmapFactory.decodeStream(in);
 				} else {
-					final ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
-					out = new BufferedOutputStream(dataStream, IO_BUFFER_SIZE);
-					StreamUtils.copy(in, out);
-					out.flush();
-
-					final byte[] data = dataStream.toByteArray();
-					bitmap = BitmapFactory
-							.decodeByteArray(data, 0, data.length);
+					in = new BufferedInputStream(url.openStream(),
+							IO_BUFFER_SIZE);
 				}
-			} else {
-				Log.w(LOG_TAG, "Can't load photo - no file and no url");
+
+				if (in != null) {
+					if (FLAG_DECODE_PHOTO_STREAM_WITH_SKIA) {
+						bitmap = BitmapFactory.decodeStream(in);
+					} else {
+						final ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+						out = new BufferedOutputStream(dataStream,
+								IO_BUFFER_SIZE);
+						StreamUtils.copy(in, out);
+						out.flush();
+
+						final byte[] data = dataStream.toByteArray();
+						bitmap = BitmapFactory.decodeByteArray(data, 0,
+								data.length);
+					}
+				} else {
+					Log.w(LOG_TAG, "Can't load photo - no file and no url");
+				}
 			}
-			// }
 		} catch (IOException e) {
 			Log.e(LOG_TAG, "Could not load photo: " + this, e);
 		} finally {

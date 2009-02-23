@@ -476,10 +476,8 @@ public class ViewPhotoActivity extends Activity implements
 
 			Photo photo = photoDAO.selectByPhotoId(mPhoto.getPhotoId());
 			if (photo != null) {
-				StreamUtils
-						.saveBitmap(this, ((BitmapDrawable) mPhotoView
-								.getDrawable()).getBitmap(), photo.getId()
-								+ ".jpg");
+				StreamUtils.saveBitmap(this, ((BitmapDrawable) mPhotoView
+						.getDrawable()).getBitmap(), photo.getId() + ".jpg");
 			}
 		}
 	}
@@ -758,21 +756,6 @@ public class ViewPhotoActivity extends Activity implements
 		}
 	}
 
-	// private void handleTextViewLanscape(String viewText, TextView textView,
-	// int resId) {
-	// if (viewText != null && !"".equals(viewText)) {
-	// LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textView
-	// .getLayoutParams();
-	// textView.setLayoutParams(params);
-	// String format = ViewPhotoActivity.this.getResources()
-	// .getString(resId);
-	// textView.setText(String.format(format, viewText));
-	// textView.setVisibility(View.VISIBLE);
-	// } else {
-	// textView.setVisibility(View.GONE);
-	// }
-	// }
-
 	private class CropWallpaperExecutorViewPhotoActivity implements
 			CropWallpaperExecutor {
 
@@ -794,6 +777,9 @@ public class ViewPhotoActivity extends Activity implements
 
 		@Override
 		public void onPostExecuteSuccess(final Intent intent) {
+			// startActivityForResult(intent,
+			// CropWallpaperTask.REQUEST_CROP_IMAGE);
+
 			ViewPhotoActivity.this.mTask = new SetWallpaperTask(
 					ViewPhotoActivity.this, new SetWallpaperExecutor())
 					.execute();

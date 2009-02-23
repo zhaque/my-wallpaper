@@ -55,28 +55,9 @@ public class CropWallpaperTask extends UserTask<Photo, Void, Boolean> {
 
 	public Boolean doInBackground(Photo... params) {
 		boolean success = false;
-
 		Bitmap bitmap = ServiceManager.get().getService().loadPhotoBitmap(
 				params[0], PhotoSize.MEDIUM);
-
 		success = StreamUtils.saveBitmap(context, bitmap, mFile.getName());
-		//			
-		// } catch (FileNotFoundException e) {
-		// android.util.Log.e(TAG, "Could not download photo", e);
-		// success = false;
-		// } catch (IOException e) {
-		// android.util.Log.e(TAG, "Could not download photo", e);
-		// success = false;
-		// } finally {
-		// if (out != null) {
-		// try {
-		// out.close();
-		// } catch (IOException e) {
-		// success = false;
-		// }
-		// }
-		// }
-
 		return success;
 	}
 

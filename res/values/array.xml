@@ -52,7 +52,7 @@
 		<item>My Network</item>
 		<item>My Favorites</item>
 		<item>Randomize</item>
-		
+		<item>My Tags</item>
 	</string-array>
 
 	<string-array name="photo_source_type_values">
@@ -61,6 +61,7 @@
 		<item>personal</item>
 		<item>favorites</item>
 		<item>random</item>
+		<item>my_tags</item>
 	</string-array>
 
 	<string-array name="network_names">

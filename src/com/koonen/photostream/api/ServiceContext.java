@@ -148,6 +148,17 @@ public class ServiceContext implements Parcelable {
 		return result;
 	}
 
+	public static ServiceContext createMyTagsContext(int pageSize, String query) {
+		ServiceContext result = new ServiceContext();
+		result.setPagable(true);
+		result.setPageSize(pageSize);
+		result.setCurrentPage(1);
+		result.type = Type.PERSONAL_SEARCH;
+		result.setQuery(query);
+		result.setScreenName("My network photos");
+		return result;
+	}
+	
 	public ServiceContext() {
 		extra = new HashMap<String, String>();
 	}

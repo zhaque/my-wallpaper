@@ -26,6 +26,7 @@ public class UserPreferences {
 	public static final String ROTATION_SCHEDULE_KEY = "photostream.rotation-schedule";
 	public static final String ROTATION_SOURCE_KEY = "photostream.rotation_background_source";
 	public static final String ROTATION_NOTIFICATION_KEY = "photostream.rotation_background_notification";
+	public static final String ROTATION_MY_TAGS_KEY = "photostream.rotation_my_tags";
 
 	public static final String EFFECTS_KEY = "photostream.effects";
 	public static final String GROUP_NAME_KEY = "photostream.groupName";
@@ -102,4 +103,7 @@ public class UserPreferences {
 		return preferences.getString(GROUP_NAME_KEY, "344828@N24");
 	}
 
+	public String getMyTags() {
+		return preferences.getString(ROTATION_MY_TAGS_KEY, "");
+	}
 }

@@ -622,10 +622,14 @@ public class PhotostreamActivity extends Activity implements
 										: R.drawable.not_found_small_2);
 					} else {
 						if (photo.isScaled()) {
-							double k = 100.0 / bitmap.getWidth();
-							int height = (int) (k * bitmap.getHeight());
-							bitmap = Bitmap.createScaledBitmap(bitmap, 100,
-									height, true);
+							// double k = 100.0 / bitmap.getWidth();
+							// int height = (int) (k * bitmap.getHeight());
+							// bitmap = Bitmap.createScaledBitmap(bitmap, 100,
+							// height, true);
+							final Bitmap framed = ImageUtilities.scaleAndFrame(
+									bitmap, 100, 100);
+							bitmap.recycle();
+							bitmap = framed;
 						}
 					}
 					publishProgress(new LoadedPhoto(ImageUtilities

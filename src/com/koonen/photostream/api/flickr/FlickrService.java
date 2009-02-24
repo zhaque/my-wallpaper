@@ -662,16 +662,20 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 		}
 	}
 
-	private PhotoList search(String query, int page, int perPage)
-			throws ServiceNetworkException {
+	private PhotoList search(String query, int page, int perPage,
+			boolean personalSearch) throws ServiceNetworkException,
+			UserNotFoundException {
 		final Uri.Builder uri = buildGetMethod(API_PHOTOS_SEARCH);
+		if (personalSearch) {
+			uri.appendQueryParameter(PARAM_USERID, getUserId());
+		}
 		uri.appendQueryParameter(PARAM_PER_PAGE, String.valueOf(perPage));
 		uri.appendQueryParameter(PARAM_PAGE, String.valueOf(page));
 		uri.appendQueryParameter(PARAM_TAGS, query);
 		uri.appendQueryParameter(PARAM_EXTRAS, VALUE_DEFAULT_EXTRAS);
 
 		String group = userPreferences.getGroup();
-		if (group != "") {
+		if (group != "" && !personalSearch) {
 			uri.appendQueryParameter(PARAM_GROUP_ID, group);
 		}
 
@@ -987,7 +991,11 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 			break;
 
 		case SEARCH:
-			result = search(context.getQuery(), page, perPage);
+			result = search(context.getQuery(), page, perPage, false);
+			break;
+
+		case PERSONAL_SEARCH:
+			result = search(context.getQuery(), page, perPage, true);
 			break;
 
 		case RECENT:

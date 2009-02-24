@@ -104,6 +104,10 @@
 	<string name="user_preferences_background_source">
 		Collection
 	</string>
+	
+	<string name="user_preferences_my_tags">
+		My Tags
+	</string>
 
 	<string name="user_preferences_name">Network login</string>
 

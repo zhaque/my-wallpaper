@@ -45,6 +45,7 @@ import android.util.Log;
 import android.util.Xml;
 import android.view.InflateException;
 
+import com.koonen.photostream.ImageUtilities;
 import com.koonen.photostream.api.FilePhoto;
 import com.koonen.photostream.api.IPhotoService;
 import com.koonen.photostream.api.Photo;
@@ -866,21 +867,33 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 			URL url = new URL(photo.getUrl(size));
 			if (photo instanceof FilePhoto) {
 				File file = new File(url.getFile());
-				if (file.exists() && file.canRead()) {// && file.length() < 1024
-														// * 1024
+				if (file.exists() && file.canRead()) {
 					Options options = new Options();
-					// options.inJustDecodeBounds = false;
-					options.outHeight = 200;
-					options.outWidth = 200;
-					options.inSampleSize = 4;
+					options.inJustDecodeBounds = true;
+					// get size of image
+					BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+					Integer width = options.outWidth;
+					Integer height = options.outHeight;
+					// int sampleSize = ImageUtilities
+					// .calculateSizeBitmapByScreen(context
+					// .getWallpaperDesiredMinimumWidth(), context
+					// .getWallpaperDesiredMinimumHeight(), width,
+					// height);
+					int sampleSize = ImageUtilities.calculateSampleSize(context
+							.getWallpaperDesiredMinimumWidth(), context
+							.getWallpaperDesiredMinimumHeight(), width, height);
+					// int width = context.getWallpaperDesiredMinimumWidth();
+					// double k = width / options.outWidth;
+					// int height = (int) (k * options.outHeight);
+					// bitmap = Bitmap.createScaledBitmap(bitmap, width, height,
+					// true);
+					options.inJustDecodeBounds = false;
+					// options.outHeight = 200;
+					// options.outWidth = 200;
+					options.inSampleSize = sampleSize;
 					// options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 					bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(),
 							options);
-					// BitmapDrawable drawable = new BitmapDrawable(file
-					// .getAbsolutePath());
-					// if (drawable != null) {
-					// bitmap = drawable.getBitmap();
-					// }
 				}
 			} else {
 				if (url.getHost() == null) {

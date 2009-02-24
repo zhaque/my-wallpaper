@@ -25,7 +25,8 @@
 		android:icon="@drawable/ic_dialog_wallpaper" />
 	<item android:id="@+id/menu_item_save_as_faivorites"
 		android:title="@string/menu_item_add_to_faivorites" android:icon="@drawable/ic_dialog_favorite" />
+<!-- 
 	<item android:id="@+id/menu_item_similar" android:title="@string/menu_item_similar"
 		android:icon="@drawable/ic_dialog_similar" />
-
+ -->
 </menu>

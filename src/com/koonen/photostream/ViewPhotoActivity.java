@@ -365,8 +365,8 @@ public class ViewPhotoActivity extends Activity implements
 		}
 		menu.findItem(R.id.menu_item_share).setEnabled(notFilePhoto);
 		String tags = mPhoto.getTags();
-		menu.findItem(R.id.menu_item_similar).setEnabled(
-				notFilePhoto && tags != null && !"".equals(tags));
+		// menu.findItem(R.id.menu_item_similar).setEnabled(
+		// notFilePhoto && tags != null && !"".equals(tags));
 		return super.onPrepareOptionsMenu(menu);
 
 	}
@@ -388,9 +388,9 @@ public class ViewPhotoActivity extends Activity implements
 			onSet();
 			break;
 
-		case R.id.menu_item_similar:
-			onSimilar();
-			break;
+		// case R.id.menu_item_similar:
+		// onSimilar();
+		// break;
 		}
 		return super.onMenuItemSelected(featureId, item);
 	}

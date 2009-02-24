@@ -18,12 +18,12 @@
 	<string name="screen_photostream_back">Back</string>
 	<string name="screen_more">More</string>
 
-	<string name="menu_item_photo_set">Set as Wallpaper</string>
+	<string name="menu_item_photo_set">Use it</string>
 	<string name="menu_item_add_to_faivorites">
-		Save as Favorites
+		Add it
 	</string>
 	<string name="menu_item_delete_from_faivorites">
-		Remove from Favorites
+		Remove it
 	</string>
 	<string name="menu_item_similar">Simillar Backgrounds</string>
 
@@ -42,7 +42,7 @@
 	<string name="menu_item_info_label">Information</string>
 	<string name="menu_item_settings_label">Settings</string>
 	<string name="menu_item_radar_label">Radar</string>
-	<string name="menu_item_share_label">Share</string>
+	<string name="menu_item_share_label">Share it</string>
 
 
 	<string name="error_cannot_find_location">

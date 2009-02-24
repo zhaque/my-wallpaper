@@ -1,8 +1,11 @@
 package com.koonen.photostream.dao;
 
+import java.util.Arrays;
 import java.util.HashMap;
-
-import com.koonen.photostream.R;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -18,6 +21,8 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.koonen.photostream.R;
 
 /**
  * 
@@ -35,7 +40,7 @@ public class PhotoUrlListProvider extends ContentProvider {
 
 	private static final String DATABASE_NAME = "PhotostreamDB";
 
-	private static final int DATABASE_VERSION = 6;
+	private static final int DATABASE_VERSION = 8;
 
 	private static DatabaseHelper openHelper;
 
@@ -85,14 +90,18 @@ public class PhotoUrlListProvider extends ContentProvider {
 
 			Category category = Category.createRecentCategory();
 
-			CategoryDAO categoryDAO = new CategoryDAO();
+			CategoryDAO categoryDAO = new CategoryDAO(db);
 			categoryDAO.insert(db, category);
 
-			for (String categoryName : context.getResources().getStringArray(
-					R.array.init_categories)) {
+			String[] categoryNames = context.getResources().getStringArray(
+					R.array.init_categories_names_v7);
+			String[] categoryValues = context.getResources().getStringArray(
+					R.array.init_categories_values_v7);
+
+			for (int i = 0; i < categoryNames.length; i++) {
 				category = Category.createCategory();
-				category.setName(categoryName);
-				category.setTags(categoryName);
+				category.setName(categoryNames[i]);
+				category.setTags(categoryValues[i]);
 				categoryDAO.insert(db, category);
 			}
 		}
@@ -100,11 +109,39 @@ public class PhotoUrlListProvider extends ContentProvider {
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-					+ newVersion + ", which will destroy all old data");
+					+ newVersion);
+
+			CategoryDAO categoryDAO = new CategoryDAO(db);
+			List<Category> oldCategories = categoryDAO.selectAll();
+
+			switch (oldVersion) {
+			case 6:
+				// create filter set
+				String[] categoriesV6 = context.getResources().getStringArray(
+						R.array.init_categories_v6);
+				Set<String> filtersSet = new HashSet<String>(Arrays.asList(categoriesV6));
+				// filter exists categories
+				for (Iterator<Category> iterator = oldCategories.iterator(); iterator
+						.hasNext();) {
+					Category category = (Category) iterator.next();
+					if (category.getName().equalsIgnoreCase(category.getTags())
+							&& filtersSet.contains(category.getName())) {
+						iterator.remove();
+					}
+				}
+				break;
+			}
+
 			db.execSQL("DROP TABLE IF EXISTS " + PhotoUrlList.TABLE_NAME);
 			db.execSQL("DROP TABLE IF EXISTS " + CategoryList.TABLE_NAME);
 
 			onCreate(db);
+
+			for (Category category : oldCategories) {
+				if (!category.isRecent()) {
+					categoryDAO.insert(db, category);
+				}
+			}
 		}
 
 	}

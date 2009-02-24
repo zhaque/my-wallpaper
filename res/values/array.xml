@@ -89,7 +89,7 @@
 		<item>.bmp</item>
 	</array>
 
-	<array name="init_categories">
+	<array name="init_categories_v6">
 		<item>Me</item>
 		<item>Art</item>
 		<item>Australia</item>
@@ -144,6 +144,34 @@
 		<item>Water</item>
 		<item>Wedding</item>
 		<item>Winter</item>
+	</array>
+
+	<array name="init_categories_names_v7">
+		<item>Art</item>
+		<item>Animals</item>
+		<item>Beach</item>
+		<item>Countries</item>
+		<item>Cities</item>
+		<item>Food</item>
+		<item>Galaxy</item>
+		<item>Music</item>
+		<item>Nature and Wildlife</item>
+		<item>Seasons</item>
+		<item>World</item>
+	</array>
+	
+	<array name="init_categories_values_v7">
+		<item>Art Painting Colors</item>
+		<item>Cat Dog Pets Tiger Lion Birds</item>
+		<item>Beach Water Sand</item>
+		<item>Canada Brazil Russia USA UK Sweden China India France</item>
+		<item>Stockholm London Moscow New York Tokyo Paris San Francisco</item>
+		<item>Food Recipes Cooking</item>
+		<item>Galaxy Sun Moon NASA Jupiter Astronomy</item>
+		<item>Music Concert Festival</item>
+		<item>Nature Flowers Wildlife Mountains Sky Sea</item>
+		<item>Sunny Rain Snow Summer Sunset Winter</item>
+		<item>Australia America Europe Asia Africa World</item>
 	</array>
 
 	<string-array name="group_names">

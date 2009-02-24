@@ -14,7 +14,14 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class CategoryDAO {
 
+	private SQLiteDatabase database;
+
 	public CategoryDAO() {
+	}
+
+	public CategoryDAO(SQLiteDatabase database) {
+		super();
+		this.database = database;
 	}
 
 	private void checkCategoryFields(Category category) {
@@ -52,16 +59,14 @@ public class CategoryDAO {
 	}
 
 	public void insert(Category category) {
-		SQLiteDatabase database = PhotoUrlListProvider.getReadableDatabase();
-
-		insert(database, category);
+		insert(getDatabase(), category);
 	}
 
 	public int getTotalCount() {
 		String sql = String.format("SELECT COUNT(*) FROM %s",
 				CategoryList.TABLE_NAME);
 
-		SQLiteDatabase database = PhotoUrlListProvider.getReadableDatabase();
+		SQLiteDatabase database = getDatabase();
 		Cursor cursor = database.rawQuery(sql, null);
 		boolean move = cursor.moveToFirst();
 		int totalCount = 0;
@@ -74,7 +79,7 @@ public class CategoryDAO {
 	}
 
 	public List<Category> selectAll() {
-		SQLiteDatabase database = PhotoUrlListProvider.getReadableDatabase();
+		SQLiteDatabase database = getDatabase();
 
 		String sql = String.format("SELECT %s,%s,%s FROM %s",
 				CategoryList.Columns._ID, CategoryList.Columns.CATEGORY_NAME,
@@ -92,7 +97,7 @@ public class CategoryDAO {
 	}
 
 	public void update(Category category) {
-		SQLiteDatabase database = PhotoUrlListProvider.getReadableDatabase();
+		SQLiteDatabase database = getDatabase();
 
 		checkCategoryFields(category);
 
@@ -103,7 +108,7 @@ public class CategoryDAO {
 	}
 
 	public void delete(long id) {
-		SQLiteDatabase database = PhotoUrlListProvider.getReadableDatabase();
+		SQLiteDatabase database = getDatabase();
 		database.delete(CategoryList.TABLE_NAME, CategoryList.Columns._ID + "="
 				+ id, null);
 	}
@@ -136,7 +141,7 @@ public class CategoryDAO {
 	// }
 
 	public Category selectByCategoryName(String categoryName) {
-		SQLiteDatabase database = PhotoUrlListProvider.getReadableDatabase();
+		SQLiteDatabase database = getDatabase();
 
 		String sql = String.format("SELECT %s,%s,%s FROM %s WHERE (%s=?)",
 				CategoryList.Columns._ID, CategoryList.Columns.CATEGORY_NAME,
@@ -152,5 +157,13 @@ public class CategoryDAO {
 		}
 		cursor.close();
 		return category;
+	}
+	
+	private SQLiteDatabase getDatabase() {
+		SQLiteDatabase database = this.database;
+		if (database == null) {
+			database = PhotoUrlListProvider.getReadableDatabase();
+		}
+		return database;
 	}
 }

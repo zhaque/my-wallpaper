@@ -21,6 +21,8 @@ public class BackgroundSource extends Enumeration {
 			"telephone", "telephone");
 	public static final BackgroundSource FILE_SYSTEM_EXTERNAL = new BackgroundSource(
 			"sdcard", "sdcard");
+	public static final BackgroundSource GROUP = new BackgroundSource(
+			"group", "group");
 
 	static {
 		add(BackgroundSource.class, RANDOM);
@@ -29,6 +31,7 @@ public class BackgroundSource extends Enumeration {
 		add(BackgroundSource.class, FAVORITES);
 		add(BackgroundSource.class, FILE_SYSTEM_INTERNAL);
 		add(BackgroundSource.class, FILE_SYSTEM_EXTERNAL);
+		add(BackgroundSource.class, GROUP);
 	}
 
 	public static BackgroundSource valueOf(String name) {

@@ -148,6 +148,9 @@ public class RotationService extends Service {
 							serviceContext = ServiceContext
 									.createMyTagsContext(1, userPreferences
 											.getMyTags());
+						} else if (source == BackgroundSource.GROUP) {
+							serviceContext = ServiceContext
+									.createSearchContext(1, "");
 						}
 					} else {
 						if (serviceContext.isNext()) {

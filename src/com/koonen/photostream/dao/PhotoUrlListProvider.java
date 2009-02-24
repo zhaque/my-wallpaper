@@ -40,7 +40,7 @@ public class PhotoUrlListProvider extends ContentProvider {
 
 	private static final String DATABASE_NAME = "PhotostreamDB";
 
-	private static final int DATABASE_VERSION = 8;
+	private static final int DATABASE_VERSION = 7;
 
 	private static DatabaseHelper openHelper;
 
@@ -119,7 +119,8 @@ public class PhotoUrlListProvider extends ContentProvider {
 				// create filter set
 				String[] categoriesV6 = context.getResources().getStringArray(
 						R.array.init_categories_v6);
-				Set<String> filtersSet = new HashSet<String>(Arrays.asList(categoriesV6));
+				Set<String> filtersSet = new HashSet<String>(Arrays
+						.asList(categoriesV6));
 				// filter exists categories
 				for (Iterator<Category> iterator = oldCategories.iterator(); iterator
 						.hasNext();) {

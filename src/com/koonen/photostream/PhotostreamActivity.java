@@ -381,19 +381,15 @@ public class PhotostreamActivity extends Activity implements
 								break;
 							case 1:
 								serviceContext = ServiceContext
-										.createInternalContext(preferences
-												.getImagesPerRequest());
-								animateAndLoadPhotos(mNextAnimation);
-								// FileBrowserActivity
-								// .show(PhotostreamActivity.this);
-								break;
-							case 2:
-								serviceContext = ServiceContext
 										.createExternalContext(preferences
 												.getImagesPerRequest());
 								animateAndLoadPhotos(mNextAnimation);
-								// FileBrowserActivity
-								// .show(PhotostreamActivity.this);
+								break;
+							case 2:
+								serviceContext = ServiceContext
+										.createInternalContext(preferences
+												.getImagesPerRequest());
+								animateAndLoadPhotos(mNextAnimation);
 								break;
 							default:
 								dialog.dismiss();

@@ -27,7 +27,7 @@ public class FilePhoto extends Photo {
 	private FilePhoto(Parcel in) {
 		super(in);
 		path = in.readString();
-		cached = Boolean.getBoolean(in.readString());
+		cached = Boolean.parseBoolean(in.readString());
 	}
 
 	@Override

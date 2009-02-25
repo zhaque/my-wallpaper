@@ -215,6 +215,10 @@
 		You haven\'t favorites photos
 	</string>
 	
+	<string name="no_search_result">
+		We didn\'t find a match for your query
+	</string>
+	
 	<string name="dialog_name_info">
 		Info
 	</string>

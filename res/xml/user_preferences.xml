@@ -20,6 +20,8 @@
 			android:entries="@array/group_names" android:entryValues="@array/group_values"
 			android:dependency="photostream.enable-network" android:defaultValue="344828@N24" />
 
+		<EditTextPreference android:title="@string/user_preferences_my_tags"
+			android:key="photostream.my_tags" />
 	</PreferenceCategory>
 
 
@@ -45,9 +47,6 @@
 			android:title="@string/user_preferences_rotation_background_notification"
 			android:dependency="photostream.enable-rotation"
 			android:defaultValue="false" />
-			
-		<EditTextPreference android:title="@string/user_preferences_my_tags"
-			android:key="photostream.rotation_my_tags" android:dependency="photostream.enable-network" />
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="Display">

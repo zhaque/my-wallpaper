@@ -65,6 +65,7 @@ import com.koonen.photostream.effects.EffectsApplier;
 import com.koonen.photostream.settings.UserPreferences;
 import com.koonen.photostream.settings.UserSettingsActivity;
 import com.koonen.utils.ConfigurationReader;
+import com.koonen.utils.DialogUtils;
 
 /**
  * Activity used to display a Flickr user's photostream. This activity shows a
@@ -680,6 +681,10 @@ public class PhotostreamActivity extends Activity implements
 			if (serviceContext.getType() == Type.FAVORITES
 					&& result.getCount() == 0) {
 				showMessage(R.string.no_favorites_photo);
+			} else if (serviceContext.getType() == Type.SEARCH
+					&& result.getCount() == 0) {
+				DialogUtils.showInfoDialog(PhotostreamActivity.this,
+						R.string.no_search_result, null, null);
 			}
 			prepareMenu();
 			mSwitcher.showNext();

@@ -1,25 +1,21 @@
 package com.koonen.photostream;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.koonen.photostream.dao.Category;
+import com.koonen.utils.DialogUtils;
+import com.koonen.utils.DialogUtils.ClickHandler;
 
 /**
  * 
@@ -50,40 +46,18 @@ public class CategoryActivity extends ListActivity {
 		final SharedPreferences preferences = getSharedPreferences(
 				PREFERENCES_CATEGORY, Activity.MODE_PRIVATE);
 		if (!preferences.getBoolean(PREFERENCE_CATEGORY_IS_FIRST, false)) {
-			LinearLayout layout = new LinearLayout(this);
-			LayoutParams layoutParams = new LayoutParams(
-					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			layout.setLayoutParams(layoutParams);
-			layout.setPadding(5, 0, 0, 0);
-			TextView view = new TextView(this);
-			view.setText(R.string.category_first_open);
-			view.setLayoutParams(layoutParams);
-			layout.addView(view);
 
-			final AlertDialog dialog = new AlertDialog.Builder(this).setTitle(
-					R.string.dialog_name_info).setView(layout).create();
-
-			dialog.setButton(
-					getResources().getString(R.string.ok_button_label),
-					new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface arg0, int arg1) {
-							commitCategoryIsFirst(preferences);
-							dialog.dismiss();
-						}
-
-					});
-			dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+			DialogUtils.ClickHandler clickHandler = new ClickHandler() {
 
 				@Override
-				public void onCancel(DialogInterface arg0) {
+				public void handle() {
 					commitCategoryIsFirst(preferences);
 				}
-			});
 
-			dialog.getWindow().setGravity(Gravity.CENTER);
-			dialog.show();
+			};
+
+			DialogUtils.showInfoDialog(this, R.string.category_first_open,
+					clickHandler, clickHandler);
 		}
 	}
 

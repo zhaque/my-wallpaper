@@ -8,6 +8,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.SystemClock;
@@ -46,11 +47,14 @@ public class RotationService extends Service {
 
 	private ServiceManager manager;
 
+	private Handler handler;
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		ServiceManager.init(this);
 		manager = ServiceManager.get();
+		handler = new Handler();
 	}
 
 	@Override
@@ -62,11 +66,19 @@ public class RotationService extends Service {
 		deleteFile(CropWallpaperTask.WALLPAPER_FILE_NAME);
 	}
 
-	private void showMessage(int codeMessage) {
-		if (userPreferences.isRotationNotificationEnabled()) {
-			Toast.makeText(RotationService.this, codeMessage,
-					Toast.LENGTH_SHORT).show();
-		}
+	private void showMessage(final int codeMessage) {
+		handler.post(new Runnable() {
+
+			@Override
+			public void run() {
+				if (userPreferences.isRotationNotificationEnabled()) {
+					Toast.makeText(RotationService.this, codeMessage,
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+
+		});
+
 	}
 
 	@Override
@@ -147,13 +159,13 @@ public class RotationService extends Service {
 						} else if (source == BackgroundSource.FILE_SYSTEM_EXTERNAL) {
 							serviceContext = ServiceContext
 									.createExternalContext(1);
-//						} else if (source == BackgroundSource.MY_TAGS) {
-//							// serviceContext = ServiceContext
-//							// .createMyTagsContext(1, userPreferences
-//							// .getMyTags());
-//							serviceContext = ServiceContext
-//									.createMyNetworkContext(1, userPreferences
-//											.getMyTags());
+							// } else if (source == BackgroundSource.MY_TAGS) {
+							// // serviceContext = ServiceContext
+							// // .createMyTagsContext(1, userPreferences
+							// // .getMyTags());
+							// serviceContext = ServiceContext
+							// .createMyNetworkContext(1, userPreferences
+							// .getMyTags());
 						} else if (source == BackgroundSource.GROUP) {
 							// serviceContext = ServiceContext
 							// .createSearchContext(1, "");

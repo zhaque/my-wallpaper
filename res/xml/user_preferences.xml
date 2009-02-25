@@ -35,7 +35,7 @@
 			android:entries="@array/background_change_period_names"
 			android:entryValues="@array/background_change_period_values"
 			android:dependency="photostream.enable-rotation"
-			android:defaultValue="54000" />
+			android:defaultValue="60000" />
 
 		<ListPreference android:dialogTitle=""
 			android:key="photostream.rotation_background_source" android:title="@string/user_preferences_background_source"

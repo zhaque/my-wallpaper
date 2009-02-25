@@ -63,15 +63,47 @@ public class ServiceContext implements Parcelable {
 		return result;
 	}
 
-	public static ServiceContext createPersonalContext(int pageSize) {
+	public static ServiceContext createMyNetworkContext(int pageSize, String query) {
+		ServiceContext result = null;
+		if (isEmpty(query)) {
+			result = createMyNetworkContext(pageSize, query, Type.PERSONAL);
+		} else {
+			result = createMyNetworkContext(pageSize, query, Type.PERSONAL_SEARCH);
+		}
+		return result;
+	}
+	
+	private static ServiceContext createMyNetworkContext(int pageSize, String query, Type type) {
 		ServiceContext result = new ServiceContext();
 		result.setPagable(true);
 		result.setPageSize(pageSize);
 		result.setCurrentPage(1);
-		result.type = Type.PERSONAL;
+		result.type = type;
+		result.setQuery(query);
 		result.setScreenName("My network photos");
 		return result;
 	}
+	
+//	public static ServiceContext createPersonalContext(int pageSize) {
+//		ServiceContext result = new ServiceContext();
+//		result.setPagable(true);
+//		result.setPageSize(pageSize);
+//		result.setCurrentPage(1);
+//		result.type = Type.PERSONAL;
+//		result.setScreenName("My network photos");
+//		return result;
+//	}
+//
+//	public static ServiceContext createMyTagsContext(int pageSize, String query) {
+//		ServiceContext result = new ServiceContext();
+//		result.setPagable(true);
+//		result.setPageSize(pageSize);
+//		result.setCurrentPage(1);
+//		result.type = Type.PERSONAL_SEARCH;
+//		result.setQuery(query);
+//		result.setScreenName("My network photos");
+//		return result;
+//	}
 
 	public static ServiceContext createSingleContext(
 			ServiceContext serviceContext, int photoPageNumber) {
@@ -154,17 +186,6 @@ public class ServiceContext implements Parcelable {
 		result.setPagable(true);
 		result.setPageSize(pageSize);
 		result.setCurrentPage(1);
-		return result;
-	}
-
-	public static ServiceContext createMyTagsContext(int pageSize, String query) {
-		ServiceContext result = new ServiceContext();
-		result.setPagable(true);
-		result.setPageSize(pageSize);
-		result.setCurrentPage(1);
-		result.type = Type.PERSONAL_SEARCH;
-		result.setQuery(query);
-		result.setScreenName("My network photos");
 		return result;
 	}
 

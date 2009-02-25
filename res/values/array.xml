@@ -52,7 +52,7 @@
 		<item>My Network</item>
 		<item>My Favorites</item>
 		<item>Randomize</item>
-		<item>Tags in my Network</item>
+<!-- 	<item>Tags in my Network</item>  -->
 		<item>My Group</item>
 	</string-array>
 
@@ -62,7 +62,7 @@
 		<item>personal</item>
 		<item>favorites</item>
 		<item>random</item>
-		<item>my_tags</item>
+<!-- 	<item>my_tags</item> -->
 		<item>group</item>
 	</string-array>
 

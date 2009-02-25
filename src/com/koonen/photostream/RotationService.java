@@ -136,21 +136,29 @@ public class RotationService extends Service {
 							serviceContext = ServiceContext
 									.createFavoritesServiceContext(1);
 						} else if (source == BackgroundSource.PERSONAL) {
+							// serviceContext = ServiceContext
+							// .createPersonalContext(1);
 							serviceContext = ServiceContext
-									.createPersonalContext(1);
+									.createMyNetworkContext(1, userPreferences
+											.getMyTags());
 						} else if (source == BackgroundSource.FILE_SYSTEM_INTERNAL) {
 							serviceContext = ServiceContext
 									.createInternalContext(1);
 						} else if (source == BackgroundSource.FILE_SYSTEM_EXTERNAL) {
 							serviceContext = ServiceContext
 									.createExternalContext(1);
-						} else if (source == BackgroundSource.MY_TAGS) {
-							serviceContext = ServiceContext
-									.createMyTagsContext(1, userPreferences
-											.getMyTags());
+//						} else if (source == BackgroundSource.MY_TAGS) {
+//							// serviceContext = ServiceContext
+//							// .createMyTagsContext(1, userPreferences
+//							// .getMyTags());
+//							serviceContext = ServiceContext
+//									.createMyNetworkContext(1, userPreferences
+//											.getMyTags());
 						} else if (source == BackgroundSource.GROUP) {
-							serviceContext = ServiceContext
-									.createSearchContext(1, "");
+							// serviceContext = ServiceContext
+							// .createSearchContext(1, "");
+							serviceContext = ServiceContext.createGroupContext(
+									userPreferences.getGroup(), "", 1);
 						}
 					} else {
 						if (serviceContext.isNext()) {

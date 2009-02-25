@@ -283,9 +283,12 @@ public class PhotostreamActivity extends Activity implements
 			return true;
 
 		case MENU_ITEM_PERSONAL:
-			serviceContext = ServiceContext
-					.createPersonalContext(userPreferences
-							.getImagesPerRequest());
+			// serviceContext = ServiceContext
+			// .createPersonalContext(userPreferences
+			// .getImagesPerRequest());
+			serviceContext = ServiceContext.createMyNetworkContext(
+					userPreferences.getImagesPerRequest(), userPreferences
+							.getMyTags());
 			animateAndLoadPhotos(mNextAnimation);
 			return true;
 

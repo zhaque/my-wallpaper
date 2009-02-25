@@ -364,7 +364,7 @@ public class ViewPhotoActivity extends Activity implements
 			item.setEnabled(false);
 		}
 		menu.findItem(R.id.menu_item_share).setEnabled(notFilePhoto);
-		String tags = mPhoto.getTags();
+		// String tags = mPhoto.getTags();
 		// menu.findItem(R.id.menu_item_similar).setEnabled(
 		// notFilePhoto && tags != null && !"".equals(tags));
 		return super.onPrepareOptionsMenu(menu);
@@ -812,7 +812,8 @@ public class ViewPhotoActivity extends Activity implements
 		mContainer.setLayoutAnimationListener(null);
 		mContainer.setLayoutAnimation(null);
 		mContainer.removeAllViews();
-		loadPhoto();
+//		loadPhoto();
+		mContainer.getViewTreeObserver().addOnGlobalLayoutListener(this);
 	}
 
 	@Override
@@ -828,7 +829,8 @@ public class ViewPhotoActivity extends Activity implements
 		// mContainer.setLayoutAnimationListener(this);
 		// mContainer.setLayoutAnimation(animation);
 		mContainer.invalidate();
-		loadPhoto();
+		//loadPhoto();
+		mContainer.getViewTreeObserver().addOnGlobalLayoutListener(this);
 	}
 
 	private synchronized void setLoading(boolean value) {

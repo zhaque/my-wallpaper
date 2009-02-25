@@ -878,11 +878,6 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 					BitmapFactory.decodeFile(file.getAbsolutePath(), options);
 					Integer width = options.outWidth;
 					Integer height = options.outHeight;
-					// int sampleSize = ImageUtilities
-					// .calculateSizeBitmapByScreen(context
-					// .getWallpaperDesiredMinimumWidth(), context
-					// .getWallpaperDesiredMinimumHeight(), width,
-					// height);
 					int sampleSize = ImageUtilities.calculateSampleSize(context
 							.getWallpaperDesiredMinimumWidth(), context
 							.getWallpaperDesiredMinimumHeight(), width, height);
@@ -892,10 +887,7 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 					// bitmap = Bitmap.createScaledBitmap(bitmap, width, height,
 					// true);
 					options.inJustDecodeBounds = false;
-					// options.outHeight = 200;
-					// options.outWidth = 200;
 					options.inSampleSize = sampleSize;
-					// options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 					bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(),
 							options);
 				}

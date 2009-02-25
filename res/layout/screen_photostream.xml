@@ -11,7 +11,7 @@
 
 	<ImageView android:id="@+id/splash_image"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:visibility="gone" />
+		android:visibility="gone" android:scaleType="center" />
 
 	<ImageView android:id="@+id/refresh_image" android:src="@drawable/refresh"
 		android:layout_width="150dip" android:layout_height="150dip"
@@ -41,9 +41,8 @@
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:text="@string/screen_photostream_next" />
 
-			<TextView style="@style/TextMenuEntry"
-				android:id="@+id/menu_more" android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+			<TextView style="@style/TextMenuEntry" android:id="@+id/menu_more"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:text="@string/screen_more" />
 		</LinearLayout>
 

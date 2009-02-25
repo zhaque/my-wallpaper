@@ -32,6 +32,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -140,19 +141,38 @@ public class PhotostreamActivity extends Activity implements
 		if (showSplash) {
 			showSplash = false;
 			final ImageView splash = (ImageView) findViewById(R.id.splash_image);
+			final GridLayout grid = (GridLayout) findViewById(R.id.grid_photos);
+			final ViewAnimator switcher = (ViewAnimator) findViewById(R.id.switcher_menu);
+
+			grid.setVisibility(View.GONE);
+			switcher.setVisibility(View.GONE);
+
 			Configuration config = new ConfigurationReader(this)
 					.getConfiguration();
+
+			DisplayMetrics dm = new DisplayMetrics();
+			getWindowManager().getDefaultDisplay().getMetrics(dm);
+			Bitmap scaledBm = null;
+			int resId;
+
 			if (config.orientation == Configuration.ORIENTATION_PORTRAIT) {
-				splash.setImageResource(R.drawable.splash_320x240);
+				resId = R.drawable.splash_320x240;
 			} else {
-				splash.setImageResource(R.drawable.splash);
+				resId = R.drawable.splash;
 			}
+			Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resId);
+			scaledBm = Bitmap.createScaledBitmap(bitmap, dm.widthPixels,
+					dm.heightPixels, true);
+			bitmap.recycle();
+			splash.setImageBitmap(scaledBm);
 			splash.setVisibility(View.VISIBLE);
 			new Handler().postDelayed(new Runnable() {
 
 				@Override
 				public void run() {
 					splash.setVisibility(View.GONE);
+					grid.setVisibility(View.VISIBLE);
+					switcher.setVisibility(View.VISIBLE);
 				}
 
 			}, 2000);

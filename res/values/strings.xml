@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="application_name">My Wallpaper</string>
-	<string name="activity_create_shortcut">Flickr photos</string>
-	<string name="activity_set_wallpaper">Flickr</string>
+	<string name="activity_create_shortcut">My Wallpaper</string>
+	<string name="activity_set_wallpaper">My Wallpaper</string>
 	<string name="activity_preferences">Settings</string>
 
 	<string name="screen_login_prompt">Username</string>

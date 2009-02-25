@@ -216,7 +216,8 @@
 	</string>
 	
 	<string name="no_search_result">
-		We didn\'t find a match for your query
+		No wallpaper having a tag containing any of your search terms were found.
+		Try more general keywords or widen your search by selecting "No Group" under settings.
 	</string>
 	
 	<string name="dialog_name_info">

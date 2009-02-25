@@ -18,6 +18,10 @@ import com.koonen.photostream.dao.Category;
  */
 public class ServiceContext implements Parcelable {
 
+	private static final String SEARCH_TITLE_FORMAT_QUERY_GROUP = "Search: %s in %s";
+	private static final String SEARCH_TITLE_FORMAT_QUERY = "Search: %s";
+	private static final String SEARCH_TITLE_FORMAT_GROUP = "Search in %s";
+
 	private String screenName;
 
 	private Type type;
@@ -34,13 +38,18 @@ public class ServiceContext implements Parcelable {
 	private PhotoList result;
 
 	public static ServiceContext createSearchContext(int pageSize, String query) {
+		return createSearchContext(pageSize, query, null);
+	}
+
+	private static ServiceContext createSearchContext(int pageSize,
+			String query, String groupName) {
 		ServiceContext result = new ServiceContext();
 		result.setPagable(true);
 		result.setPageSize(pageSize);
 		result.setCurrentPage(1);
 		result.type = Type.SEARCH;
 		result.setQuery(query);
-		result.setScreenName(String.format("Search: %s", query));
+		result.setScreenName(generateSearchTitle(query, groupName));
 		return result;
 	}
 
@@ -87,7 +96,7 @@ public class ServiceContext implements Parcelable {
 		}
 		result.setQuery(serviceContext.getQuery());
 		result.type = serviceContext.getType();
-		//result.setScreenName(serviceContext.getScreenName());
+		// result.setScreenName(serviceContext.getScreenName());
 		result.setScreenName("Make this your wallpaper!");
 		return result;
 	}
@@ -158,7 +167,36 @@ public class ServiceContext implements Parcelable {
 		result.setScreenName("My network photos");
 		return result;
 	}
-	
+
+	public static ServiceContext createGroupContext(String group,
+			String groupName, int pageSize) {
+		ServiceContext result;
+		if ("".equals(group)) {
+			result = ServiceContext.createRecentContext(pageSize);
+		} else {
+			result = ServiceContext
+					.createSearchContext(pageSize, "", groupName);
+		}
+		return result;
+	}
+
+	private static boolean isEmpty(String string) {
+		return string == null || "".equals(string);
+	}
+
+	private static String generateSearchTitle(String query, String groupName) {
+		String title;
+		if (!isEmpty(groupName) && !isEmpty(query)) {
+			title = String.format(SEARCH_TITLE_FORMAT_QUERY_GROUP, query,
+					groupName);
+		} else if (!isEmpty(groupName)) {
+			title = String.format(SEARCH_TITLE_FORMAT_GROUP, groupName);
+		} else {
+			title = String.format(SEARCH_TITLE_FORMAT_QUERY, query);
+		}
+		return title;
+	}
+
 	public ServiceContext() {
 		extra = new HashMap<String, String>();
 	}

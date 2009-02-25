@@ -66,6 +66,7 @@ import com.koonen.photostream.settings.UserPreferences;
 import com.koonen.photostream.settings.UserSettingsActivity;
 import com.koonen.utils.ConfigurationReader;
 import com.koonen.utils.DialogUtils;
+import com.koonen.utils.GroupUtils;
 
 /**
  * Activity used to display a Flickr user's photostream. This activity shows a
@@ -227,15 +228,10 @@ public class PhotostreamActivity extends Activity implements
 		userPreferences = new UserPreferences(this);
 
 		if (serviceContext == null) {
-			if (userPreferences.getGroup() == "") {
-				serviceContext = ServiceContext
-						.createRecentContext(userPreferences
-								.getImagesPerRequest());
-			} else {
-				serviceContext = ServiceContext.createSearchContext(
-						userPreferences.getImagesPerRequest(), "");
-			}
-
+			String group = userPreferences.getGroup();
+			serviceContext = ServiceContext.createGroupContext(group,
+					GroupUtils.getGroupName(getResources(), group),
+					userPreferences.getImagesPerRequest());
 		}
 
 		initService();

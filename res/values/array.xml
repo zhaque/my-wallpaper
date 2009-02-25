@@ -76,8 +76,8 @@
 
 	<string-array name="take_photo_menu_items">
 		<item>Take a Photo</item>
-		<item>My Phone</item>
 		<item>My SDCard</item>
+		<item>My Phone</item>
 		<item>Cancel</item>
 	</string-array>
 

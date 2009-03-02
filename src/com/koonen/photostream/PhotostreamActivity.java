@@ -67,6 +67,7 @@ import com.koonen.photostream.settings.UserSettingsActivity;
 import com.koonen.utils.ConfigurationReader;
 import com.koonen.utils.DialogUtils;
 import com.koonen.utils.GroupUtils;
+import com.koonen.utils.StatisticUtils;
 
 /**
  * Activity used to display a Flickr user's photostream. This activity shows a
@@ -137,6 +138,18 @@ public class PhotostreamActivity extends Activity implements
 
 		});
 		prepareMenu();
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		StatisticUtils.onStartSession(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		StatisticUtils.onEndSession();
 	}
 
 	private void showSplash() {

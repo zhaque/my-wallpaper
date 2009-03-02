@@ -21,7 +21,7 @@
 			android:dependency="photostream.enable-network" android:defaultValue="344828@N24" />
 
 		<EditTextPreference android:title="@string/user_preferences_my_tags"
-			android:key="photostream.my_tags" />
+			android:key="photostream.my_tags" android:dependency="photostream.enable-network" />
 	</PreferenceCategory>
 
 

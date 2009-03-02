@@ -1,6 +1,7 @@
 <resources>
 
 	<string-array name="background_change_period_names">
+		<item>every 30 sec</item>
 		<item>every min</item>
 		<item>every 5 min</item>
 		<item>every 10 min</item>
@@ -13,6 +14,7 @@
 	</string-array>
 
 	<string-array name="background_change_period_values">
+		<item>30000</item>
 		<item>60000</item>
 		<item>300000</item>
 		<item>600000</item>
@@ -51,8 +53,7 @@
 		<item>My SDCard</item>
 		<item>My Network</item>
 		<item>My Favorites</item>
-		<item>Randomize</item>
-<!-- 	<item>Tags in my Network</item>  -->
+		<item>Randomize</item>		
 		<item>My Group</item>
 	</string-array>
 
@@ -61,9 +62,22 @@
 		<item>sdcard</item>
 		<item>personal</item>
 		<item>favorites</item>
-		<item>random</item>
-<!-- 	<item>my_tags</item> -->
+		<item>random</item>		
 		<item>group</item>
+	</string-array>
+
+	<string-array name="photo_source_type_safe_names">
+		<item>My Phone</item>
+		<item>My SDCard</item>		
+		<item>My Favorites</item>
+		<item>Randomize</item>
+	</string-array>
+	
+	<string-array name="photo_source_type_safe_values">
+		<item>telephone</item>
+		<item>sdcard</item>		
+		<item>favorites</item>
+		<item>random</item>				
 	</string-array>
 
 	<string-array name="network_names">
@@ -159,13 +173,15 @@
 		<item>Seasons</item>
 		<item>World</item>
 	</array>
-	
+
 	<array name="init_categories_values_v7">
 		<item>Art Painting Colors</item>
 		<item>Cat Dog Pets Tiger Lion Birds</item>
 		<item>Beach Water Sand</item>
-		<item>Canada Brazil Russia USA UK Sweden China India France</item>
-		<item>Stockholm London Moscow New York Tokyo Paris San Francisco</item>
+		<item>Canada Brazil Russia USA UK Sweden China India France
+		</item>
+		<item>Stockholm London Moscow New York Tokyo Paris San
+			Francisco</item>
 		<item>Food Recipes Cooking</item>
 		<item>Galaxy Sun Moon NASA Jupiter Astronomy</item>
 		<item>Music Concert Festival</item>

@@ -54,6 +54,7 @@ import com.koonen.photostream.dao.PhotoDAO;
 import com.koonen.photostream.settings.UserPreferences;
 import com.koonen.photostream.settings.UserSettingsActivity;
 import com.koonen.utils.ConfigurationReader;
+import com.koonen.utils.StatisticUtils;
 import com.koonen.utils.StreamUtils;
 
 /**
@@ -142,6 +143,18 @@ public class ViewPhotoActivity extends Activity implements
 		Configuration config = new ConfigurationReader(this).getConfiguration();
 		currentOrientation = config.orientation;
 		initActivity();
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		StatisticUtils.onStartSession(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		StatisticUtils.onEndSession();
 	}
 
 	private void initActivity() {
@@ -433,13 +446,6 @@ public class ViewPhotoActivity extends Activity implements
 		 * case R.id.menu_set: onSet(); break;
 		 */
 		}
-	}
-
-	private void onSimilar() {
-		Intent intent = new Intent();
-		intent.putExtra(EXTRA_SEARCH_TAGS, mPhoto.getTags());
-		setResult(SIMILAR_RESPONSE_ID, intent);
-		finish();
 	}
 
 	private void onSet() {
@@ -812,7 +818,7 @@ public class ViewPhotoActivity extends Activity implements
 		mContainer.setLayoutAnimationListener(null);
 		mContainer.setLayoutAnimation(null);
 		mContainer.removeAllViews();
-//		loadPhoto();
+		// loadPhoto();
 		mContainer.getViewTreeObserver().addOnGlobalLayoutListener(this);
 	}
 
@@ -829,7 +835,7 @@ public class ViewPhotoActivity extends Activity implements
 		// mContainer.setLayoutAnimationListener(this);
 		// mContainer.setLayoutAnimation(animation);
 		mContainer.invalidate();
-		//loadPhoto();
+		// loadPhoto();
 		mContainer.getViewTreeObserver().addOnGlobalLayoutListener(this);
 	}
 

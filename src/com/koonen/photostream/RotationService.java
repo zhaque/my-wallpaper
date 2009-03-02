@@ -23,6 +23,7 @@ import com.koonen.photostream.api.ServiceException;
 import com.koonen.photostream.api.ServiceManager;
 import com.koonen.photostream.settings.BackgroundSource;
 import com.koonen.photostream.settings.UserPreferences;
+import com.koonen.utils.StatisticUtils;
 
 /**
  * 
@@ -52,6 +53,7 @@ public class RotationService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		StatisticUtils.onStartSession(this);
 		ServiceManager.init(this);
 		manager = ServiceManager.get();
 		handler = new Handler();
@@ -204,6 +206,7 @@ public class RotationService extends Service {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		StatisticUtils.onEndSession();
 		if (mTask != null && mTask.getStatus() == UserTask.Status.RUNNING) {
 			mTask.cancel(true);
 		}

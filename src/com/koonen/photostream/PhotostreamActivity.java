@@ -26,6 +26,8 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -239,6 +241,22 @@ public class PhotostreamActivity extends Activity implements
 		handler = new Handler();
 		ServiceManager.init(this);
 		userPreferences = new UserPreferences(this);
+
+		userPreferences
+				.registerOnSharedPreferenceChangeListener(new OnSharedPreferenceChangeListener() {
+
+					@Override
+					public void onSharedPreferenceChanged(
+							SharedPreferences preference, String key) {
+						if (key.equals(UserPreferences.IMAGES_PER_REQUEST)) {
+							int imagesPerRequest = userPreferences
+									.getImagesPerRequest();
+							serviceContext.setPageSize(imagesPerRequest);
+							animateAndLoadPhotos(mNextAnimation);
+						}
+					}
+
+				});
 
 		if (serviceContext == null) {
 			String group = userPreferences.getGroup();

@@ -94,6 +94,7 @@ public class ViewPhotoActivity extends Activity implements
 	private Photo mPhoto;
 	private ServiceContext serviceContext;
 	private boolean isFirstOpen;
+	private Bitmap notScaledBitmap;
 	private Bitmap mBitmap;
 	private boolean restoreBitmap;
 	private boolean loading = false;
@@ -481,9 +482,10 @@ public class ViewPhotoActivity extends Activity implements
 			showMessage(R.string.photo_favorite_save_successfully);
 
 			Photo photo = photoDAO.selectByPhotoId(mPhoto.getPhotoId());
-			if (photo != null) {
-				StreamUtils.saveBitmap(this, ((BitmapDrawable) mPhotoView
-						.getDrawable()).getBitmap(), photo.getId() + ".jpg");
+			if (photo != null && notScaledBitmap != null) {
+				StreamUtils.saveBitmap(this, this.notScaledBitmap, photo
+						.getId()
+						+ ".jpg");
 			}
 		}
 	}

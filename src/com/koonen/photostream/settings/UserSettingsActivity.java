@@ -30,6 +30,8 @@ public class UserSettingsActivity extends PreferenceActivity {
 
 		initRotationSourcesList(networkUserName.getText());
 
+		//final OnPreferenceChangeListener networkUserNameListener = networkUserName
+				//.getOnPreferenceChangeListener();
 		networkUserName
 				.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
@@ -38,7 +40,7 @@ public class UserSettingsActivity extends PreferenceActivity {
 							Object value) {
 						String text = (String) value;
 						initRotationSourcesList(text);
-						return false;
+						return true;
 					}
 				});
 	}

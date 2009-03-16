@@ -198,6 +198,7 @@
 		<item>Wallpapers</item>
 		<item>iPhone Wallpapers</item>
 		<item>Wallpaper Exchange </item>
+		<item>Android Wallpapers</item>
 	</string-array>
 	
 	<string-array name="group_values">
@@ -206,6 +207,7 @@
 		<item>40961104@N00</item>
 		<item>344828@N24</item>
 		<item>97265118@N00</item>
+		<item>944581@N22</item>
 	</string-array>
 
 </resources>

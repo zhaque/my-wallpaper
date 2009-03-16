@@ -247,10 +247,6 @@ public class RotationService extends Service {
 			mTask = null;
 		}
 
-		public void onShowWallpaperError() {
-			showMessage(R.string.error_cannot_save_file);
-		}
-
 		public void onShowWallpaperSuccess() {
 			showMessage(R.string.success_wallpaper_set);
 		}

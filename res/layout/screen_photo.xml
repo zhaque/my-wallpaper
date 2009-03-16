@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
-	
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+
 	<ImageView android:id="@+id/refresh_image" android:src="@drawable/refresh"
 		android:layout_width="150dip" android:layout_height="150dip"
 		android:visibility="gone" android:layout_gravity="center"
@@ -24,56 +23,49 @@
 			android:orientation="vertical">
 
 			<TextView android:id="@+id/caption_tag"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:singleLine="true"
-				android:textSize="12px"
-				android:textColor="@color/translucent_white" />
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:singleLine="true" android:textSize="12px"
+				android:textColor="@color/translucent_white" android:gravity="center" />
 
 			<TextView android:id="@+id/caption_location"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:singleLine="true"
-				android:textSize="12px"
-				android:textColor="@color/translucent_white" />
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:singleLine="true" android:textSize="12px"
+				android:textColor="@color/translucent_white" android:gravity="center" />
 
 			<TextView android:id="@+id/caption_date"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:singleLine="true"
-				android:textSize="12px" android:layout_marginBottom="65dip"
-				android:textColor="@color/translucent_white" />
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:singleLine="true" android:textSize="12px"
+				android:layout_marginBottom="65dip" android:textColor="@color/translucent_white"
+				android:gravity="center" />
 		</LinearLayout>
 
 	</LinearLayout>
 
 	<ViewAnimator android:id="@+id/switcher_menu"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:inAnimation="@anim/fade_in"
-		android:outAnimation="@anim/fade_out">
+		android:inAnimation="@anim/fade_in" android:outAnimation="@anim/fade_out">
 
 		<include layout="@layout/shared_progress" />
 
 		<LinearLayout style="@style/TextMenu"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:gravity="right">
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:gravity="right">
 
-			<TextView style="@style/TextMenuEntry"
-				android:id="@+id/menu_prev" android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+			<TextView style="@style/TextMenuEntry" android:id="@+id/menu_prev"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:text="@string/screen_photo_prev" />
 
-			<TextView style="@style/TextMenuEntry"
-				android:id="@+id/menu_separator" android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+			<TextView style="@style/TextMenuEntry" android:id="@+id/menu_separator"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:layout_marginLeft="5dip" android:layout_marginRight="5dip"
 				android:text="@string/screen_photostream_separator" />
 
-			<TextView style="@style/TextMenuEntry"
-				android:id="@+id/menu_next" android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+			<TextView style="@style/TextMenuEntry" android:id="@+id/menu_next"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:text="@string/screen_photo_next" />
-				
-			<TextView style="@style/TextMenuEntry"
-				android:id="@+id/menu_more" android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+
+			<TextView style="@style/TextMenuEntry" android:id="@+id/menu_more"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:text="@string/screen_more" />
 
 		</LinearLayout>

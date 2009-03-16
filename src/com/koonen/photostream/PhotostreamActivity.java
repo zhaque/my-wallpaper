@@ -35,7 +35,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -82,8 +81,8 @@ import com.koonen.utils.StatisticUtils;
 public class PhotostreamActivity extends Activity implements
 		View.OnClickListener, Animation.AnimationListener {
 
-	private static final String TAG = PhotostreamActivity.class
-			.getCanonicalName();
+	// private static final String TAG = PhotostreamActivity.class
+	// .getCanonicalName();
 
 	static final String ACTION = "com.google.android.photostream.FLICKR_STREAM";
 
@@ -250,10 +249,22 @@ public class PhotostreamActivity extends Activity implements
 					@Override
 					public void onSharedPreferenceChanged(
 							SharedPreferences preference, String key) {
+						boolean update = true;
 						if (key.equals(UserPreferences.IMAGES_PER_REQUEST)) {
 							int imagesPerRequest = userPreferences
 									.getImagesPerRequest();
 							serviceContext.setPageSize(imagesPerRequest);
+
+						} else if (key.equals(UserPreferences.GROUP_NAME_KEY)) {
+							String group = userPreferences.getGroup();
+							serviceContext = ServiceContext.createGroupContext(
+									group, GroupUtils.getGroupName(
+											getResources(), group),
+									userPreferences.getImagesPerRequest());
+						} else {
+							update = false;
+						}
+						if (update) {
 							animateAndLoadPhotos(mNextAnimation);
 						}
 					}
@@ -624,12 +635,6 @@ public class PhotostreamActivity extends Activity implements
 		applier.applyEffects(image, value[0].mBitmap);
 		image.setTag(value[0].mPhoto);
 		image.setOnClickListener(PhotostreamActivity.this);
-		try {
-			mGrid.addView(image);
-		} catch (Exception exception) {
-			// TODO: check this point
-			Log.e(TAG, exception.getMessage(), exception);
-		}
 	}
 
 	/**
@@ -643,13 +648,13 @@ public class PhotostreamActivity extends Activity implements
 
 		private final EffectsApplier effectsApplier;
 
-//		private List<LoadedPhoto> newLoadedPhotos;
+		// private List<LoadedPhoto> newLoadedPhotos;
 
 		private LoadPhotosTask() {
 			mRandom = new Random();
 			effectsApplier = new EffectsApplier(mGrid, userPreferences);
-//			newLoadedPhotos = new ArrayList<LoadedPhoto>(userPreferences
-//					.getImagesPerRequest());
+			// newLoadedPhotos = new ArrayList<LoadedPhoto>(userPreferences
+			// .getImagesPerRequest());
 		}
 
 		@Override
@@ -707,7 +712,7 @@ public class PhotostreamActivity extends Activity implements
 		@Override
 		public void onProgressUpdate(LoadedPhoto... value) {
 			addPhoto(effectsApplier, value);
-//			newLoadedPhotos.add(value[0]);
+			// newLoadedPhotos.add(value[0]);
 		}
 
 		@Override

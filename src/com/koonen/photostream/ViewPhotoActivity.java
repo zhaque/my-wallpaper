@@ -635,17 +635,20 @@ public class ViewPhotoActivity extends Activity implements
 		}
 
 		public Bitmap doInBackground(Object... params) {
-			Bitmap bitmap = null;
+
 			Photo photo = null;
+			boolean success = false;
 
 			if (isFirstOpen) {
 				photo = ((Photo) params[0]);
 				isFirstOpen = false;
+				success = true;
 			} else {
 				PhotoList photoList = null;
 				try {
 					photoList = ServiceManager.get().getService().execute(
 							serviceContext);
+					success = true;
 				} catch (ServiceNetworkException e) {
 					photoList = new PhotoList();
 					showError();
@@ -662,29 +665,36 @@ public class ViewPhotoActivity extends Activity implements
 				}
 			}
 
-			if (photo != null) {
-				bitmap = ServiceManager.get().getService().loadPhotoBitmap(
-						photo, PhotoSize.MEDIUM);
-			}
-			if (bitmap == null) {
-				bitmap = BitmapFactory.decodeResource(getResources(),
-						R.drawable.not_found);
-				showMessage(R.string.notification_photo_not_loaded);
-			}
+			Bitmap framed = null;
+			if (success) {
+				Bitmap bitmap = null;
+				if (photo != null) {
+					bitmap = ServiceManager.get().getService().loadPhotoBitmap(
+							photo, PhotoSize.MEDIUM);
+				}
+				if (bitmap == null) {
+					bitmap = BitmapFactory.decodeResource(getResources(),
+							R.drawable.not_found);
+					showMessage(R.string.notification_photo_not_loaded);
+				}
 
-			final int width = (Integer) params[1];
-			final int height = (Integer) params[2];
+				final int width = (Integer) params[1];
+				final int height = (Integer) params[2];
 
-			final Bitmap framed = ImageUtilities.scaleAndFrame(bitmap, width,
-					height);
-			bitmap.recycle();
+				framed = ImageUtilities.scaleAndFrame(bitmap, width, height);
+				bitmap.recycle();
+			}
 
 			return framed;
 		}
 
 		@Override
 		public void onPostExecute(Bitmap result) {
-			setPhoto(result);
+			int visibled = View.INVISIBLE;
+			if (result != null) {
+				setPhoto(result);
+				visibled = View.VISIBLE;
+			}
 
 			prepareMenu();
 			mTask = null;
@@ -693,7 +703,7 @@ public class ViewPhotoActivity extends Activity implements
 
 			mContainer.startAnimation(AnimationUtils.loadAnimation(
 					ViewPhotoActivity.this, R.anim.fade_in));
-			mContainer.setVisibility(View.VISIBLE);
+			mContainer.setVisibility(visibled);
 			setLoading(false);
 		}
 
@@ -702,6 +712,7 @@ public class ViewPhotoActivity extends Activity implements
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
+
 		if (currentOrientation != newConfig.orientation) {
 			currentOrientation = newConfig.orientation;
 			if (mPhotoView.getDrawable() != null) {
@@ -719,8 +730,9 @@ public class ViewPhotoActivity extends Activity implements
 		if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
 			// Find by how many pixels the title and date must be shifted on the
 			// horizontal axis to be left aligned with the photo
-			int offsetX = (mPhotoView.getMeasuredWidth() - result.getWidth()) / 2;
-			setPhotoData(result, offsetX);
+			// int offsetX = (mPhotoView.getMeasuredWidth() - result.getWidth())
+			// / 2;
+			setPhotoData(result, 0);
 		} else {
 			setPhotoData(result, 0);
 		}
@@ -775,7 +787,6 @@ public class ViewPhotoActivity extends Activity implements
 		@Override
 		public void onPostExecuteError() {
 			cleanupWallpaper();
-			showWallpaperError();
 		}
 
 		@Override
@@ -806,10 +817,6 @@ public class ViewPhotoActivity extends Activity implements
 			mTask = null;
 		}
 
-		public void onShowWallpaperError() {
-			showWallpaperError();
-		}
-
 		public void onShowWallpaperSuccess() {
 			showWallpaperSuccess();
 		}
@@ -820,7 +827,6 @@ public class ViewPhotoActivity extends Activity implements
 		mContainer.setLayoutAnimationListener(null);
 		mContainer.setLayoutAnimation(null);
 		mContainer.removeAllViews();
-		// loadPhoto();
 		mContainer.getViewTreeObserver().addOnGlobalLayoutListener(this);
 	}
 

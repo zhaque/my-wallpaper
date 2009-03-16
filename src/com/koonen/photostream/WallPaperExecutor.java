@@ -7,7 +7,6 @@ package com.koonen.photostream;
  */
 public interface WallPaperExecutor {
 	void onCleanWallPaper();
-	void onShowWallpaperError();
 	void onShowWallpaperSuccess();
 	void onFinish();
 }

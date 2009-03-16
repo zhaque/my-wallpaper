@@ -35,6 +35,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -81,8 +82,8 @@ import com.koonen.utils.StatisticUtils;
 public class PhotostreamActivity extends Activity implements
 		View.OnClickListener, Animation.AnimationListener {
 
-	// private static final String TAG = PhotostreamActivity.class
-	// .getCanonicalName();
+	private static final String TAG = PhotostreamActivity.class
+			.getCanonicalName();
 
 	static final String ACTION = "com.google.android.photostream.FLICKR_STREAM";
 
@@ -238,6 +239,7 @@ public class PhotostreamActivity extends Activity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		handler = new Handler();
 		ServiceManager.init(this);
 		userPreferences = new UserPreferences(this);
@@ -269,6 +271,7 @@ public class PhotostreamActivity extends Activity implements
 
 		clearNotification();
 		setContentView(R.layout.screen_photostream);
+
 		setupViews();
 		loadPhotos();
 	}
@@ -625,7 +628,7 @@ public class PhotostreamActivity extends Activity implements
 			mGrid.addView(image);
 		} catch (Exception exception) {
 			// TODO: check this point
-			exception.getMessage();
+			Log.e(TAG, exception.getMessage(), exception);
 		}
 	}
 
@@ -640,9 +643,13 @@ public class PhotostreamActivity extends Activity implements
 
 		private final EffectsApplier effectsApplier;
 
+//		private List<LoadedPhoto> newLoadedPhotos;
+
 		private LoadPhotosTask() {
 			mRandom = new Random();
 			effectsApplier = new EffectsApplier(mGrid, userPreferences);
+//			newLoadedPhotos = new ArrayList<LoadedPhoto>(userPreferences
+//					.getImagesPerRequest());
 		}
 
 		@Override
@@ -700,6 +707,7 @@ public class PhotostreamActivity extends Activity implements
 		@Override
 		public void onProgressUpdate(LoadedPhoto... value) {
 			addPhoto(effectsApplier, value);
+//			newLoadedPhotos.add(value[0]);
 		}
 
 		@Override

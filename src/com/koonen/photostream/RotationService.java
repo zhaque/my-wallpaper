@@ -19,7 +19,6 @@ import com.koonen.photostream.CropWallpaperTask.CropWallpaperExecutor;
 import com.koonen.photostream.api.Photo;
 import com.koonen.photostream.api.PhotoList;
 import com.koonen.photostream.api.ServiceContext;
-import com.koonen.photostream.api.ServiceException;
 import com.koonen.photostream.api.ServiceManager;
 import com.koonen.photostream.settings.BackgroundSource;
 import com.koonen.photostream.settings.UserPreferences;
@@ -191,8 +190,8 @@ public class RotationService extends Service {
 									new CropWallpaperExecutorRotationService())
 									.execute(photo);
 						}
-					} catch (ServiceException e) {
-						Log.e(LOG_TAG, e.getMessage());
+					} catch (Exception e) {
+						Log.e(LOG_TAG, e.getMessage(), e);
 					}
 				}
 

@@ -28,7 +28,7 @@ import com.koonen.utils.StreamUtils;
 public class CameraPreviewActivity extends Activity {
 	private Preview mPreview;
 
-//	private static final String TAG = CameraPreviewActivity.class.getName();
+	// private static final String TAG = CameraPreviewActivity.class.getName();
 
 	public static final String PHOTO_FROM_CAMERA = "camera.jpg";
 	public static final int REQUEST_SHOW_FILE_SYSTEM_PHOTO = 44;

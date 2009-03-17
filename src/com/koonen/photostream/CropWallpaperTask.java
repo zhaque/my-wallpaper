@@ -30,7 +30,7 @@ public class CropWallpaperTask extends UserTask<Photo, Void, Boolean> {
 		public void onPostExecuteFinish();
 	}
 
-//	private static final String TAG = "CropWallpaperTask";
+	// private static final String TAG = "CropWallpaperTask";
 
 	public static final String WALLPAPER_FILE_NAME = "wallpaper";
 
@@ -60,7 +60,8 @@ public class CropWallpaperTask extends UserTask<Photo, Void, Boolean> {
 		int width = context.getWallpaperDesiredMinimumWidth();
 		int height = context.getWallpaperDesiredMinimumHeight();
 		Bitmap scaledBitmap = ImageUtilities.scale(bitmap, width, height);
-		success = StreamUtils.saveBitmap(context, scaledBitmap, mFile.getName());
+		success = StreamUtils
+				.saveBitmap(context, scaledBitmap, mFile.getName());
 		return success;
 	}
 

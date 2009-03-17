@@ -754,7 +754,7 @@ public class FlickrService implements IPhotoService, FlickrConstants {
 				}
 			});
 		} catch (IOException e) {
-			android.util.Log.e(LOG_TAG, "Could not find personal photos ");
+			android.util.Log.e(LOG_TAG, "Could not find personal photos ", e);
 			throw new ServiceNetworkException(e.getMessage(), e);
 		}
 

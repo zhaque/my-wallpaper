@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import android.content.Context;
+import android.util.Log;
 
 /**
  * Background task to set the cropped image as the wallpaper. The task simply
@@ -12,6 +13,8 @@ import android.content.Context;
  * deleting the temporary file and display a message to the user.
  */
 public class SetWallpaperTask extends UserTask<Void, Void, Boolean> {
+
+	private static final String TAG = SetWallpaperTask.class.getCanonicalName();
 
 	private Context context;
 	private WallPaperExecutor wallPaperExecutor;
@@ -34,7 +37,8 @@ public class SetWallpaperTask extends UserTask<Void, Void, Boolean> {
 				context.setWallpaper(in);
 				success = true;
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
+			Log.e(TAG, "Couldn't set wallpaper", e);
 			success = false;
 		} finally {
 			if (in != null) {

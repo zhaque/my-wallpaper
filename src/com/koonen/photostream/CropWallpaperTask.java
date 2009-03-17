@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 
 import com.koonen.photostream.api.Photo;
 import com.koonen.photostream.api.PhotoSize;
@@ -30,7 +31,7 @@ public class CropWallpaperTask extends UserTask<Photo, Void, Boolean> {
 		public void onPostExecuteFinish();
 	}
 
-	// private static final String TAG = "CropWallpaperTask";
+	private static final String TAG = "CropWallpaperTask";
 
 	public static final String WALLPAPER_FILE_NAME = "wallpaper";
 
@@ -55,14 +56,21 @@ public class CropWallpaperTask extends UserTask<Photo, Void, Boolean> {
 
 	public Boolean doInBackground(Photo... params) {
 		boolean success = false;
-		Bitmap bitmap = ServiceManager.get().getService().loadPhotoBitmap(
-				params[0], PhotoSize.MEDIUM);
-		int width = context.getWallpaperDesiredMinimumWidth();
-		int height = context.getWallpaperDesiredMinimumHeight();
-		Bitmap scaledBitmap = ImageUtilities.scale(bitmap, width, height);
-		bitmap.recycle();
-		success = StreamUtils
-				.saveBitmap(context, scaledBitmap, mFile.getName());
+		try {
+			Bitmap bitmap = ServiceManager.get().getService().loadPhotoBitmap(
+					params[0], PhotoSize.MEDIUM);
+			if (bitmap != null) {
+				int width = context.getWallpaperDesiredMinimumWidth();
+				int height = context.getWallpaperDesiredMinimumHeight();
+				Bitmap scaledBitmap = ImageUtilities.scale(bitmap, width,
+						height);
+				bitmap.recycle();
+				success = StreamUtils.saveBitmap(context, scaledBitmap, mFile
+						.getName());
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "Photo not loaded", e);
+		}
 		return success;
 	}
 

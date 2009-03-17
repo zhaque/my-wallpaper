@@ -33,7 +33,7 @@ public class RotationService extends Service {
 
 	private static final String LOG_TAG = RotationService.class
 			.getCanonicalName();
-	private static final int INTERVAL = 60000;
+	private static final int INTERVAL = 30000;
 
 	private UserTask<?, ?, ?> mTask;
 

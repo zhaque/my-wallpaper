@@ -18,7 +18,7 @@
 		<ListPreference android:dialogTitle=""
 			android:key="photostream.groupName" android:title="@string/user_preferences_group"
 			android:entries="@array/group_names" android:entryValues="@array/group_values"
-			android:dependency="photostream.enable-network" android:defaultValue="344828@N24" />
+			android:dependency="photostream.enable-network" android:defaultValue="944581@N22" />
 
 		<EditTextPreference android:title="@string/user_preferences_my_tags"
 			android:key="photostream.my_tags" android:dependency="photostream.enable-network" />

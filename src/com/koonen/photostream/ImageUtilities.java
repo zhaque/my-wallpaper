@@ -134,6 +134,23 @@ public final class ImageUtilities {
 
 	}
 
+	static Bitmap scale(Bitmap bitmap, int width, int height) {
+		final int bitmapWidth = bitmap.getWidth();
+		final int bitmapHeight = bitmap.getHeight();
+
+		final float scale = Math.min((float) width / (float) bitmapWidth,
+				(float) height / (float) bitmapHeight);
+
+		final int scaledWidth = (int) (bitmapWidth * scale);
+		final int scaledHeight = (int) (bitmapHeight * scale);
+
+		Bitmap decored = Bitmap.createScaledBitmap(bitmap, scaledWidth,
+				scaledHeight, true);
+
+		return decored;
+
+	}
+	
 	public static int calculateSampleSize(final int screenWidth,
 			final int screenHeight, Integer bitmapWidth, Integer bitmapHeight) {
 		float size = Math.max(bitmapWidth / (float) screenWidth, bitmapHeight

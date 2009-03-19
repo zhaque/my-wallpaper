@@ -796,11 +796,14 @@ public class ViewPhotoActivity extends Activity implements
 
 		@Override
 		public void onPostExecuteSuccess(final Intent intent) {
-			startActivityForResult(intent, CropWallpaperTask.REQUEST_CROP_IMAGE);
-
-//			ViewPhotoActivity.this.mTask = new SetWallpaperTask(
-//					ViewPhotoActivity.this, new SetWallpaperExecutor())
-//					.execute();
+			if (userPreferences.isCropWallpaper()) {
+				startActivityForResult(intent,
+						CropWallpaperTask.REQUEST_CROP_IMAGE);
+			} else {
+				ViewPhotoActivity.this.mTask = new SetWallpaperTask(
+						ViewPhotoActivity.this, new SetWallpaperExecutor())
+						.execute();
+			}
 		}
 	}
 

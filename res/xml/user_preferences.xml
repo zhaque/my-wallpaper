@@ -60,6 +60,10 @@
 			android:key="photostream.effects" android:title="@string/user_preferences_effects_title"
 			android:entries="@array/effects_names" android:entryValues="@array/effects_values"
 			android:defaultValue="random" />
+
+		<CheckBoxPreference android:key="photostream.enable-crop"
+			android:title="@string/user_preferences_crop_wallpaper"
+			android:defaultValue="false" />
 	</PreferenceCategory>
 
 </PreferenceScreen>

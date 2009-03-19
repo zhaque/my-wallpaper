@@ -32,6 +32,7 @@ public class UserPreferences {
 	public static final String GROUP_NAME_KEY = "photostream.groupName";
 
 	public static final String IMAGES_PER_REQUEST = "photostream.images_per_request";
+	public static final String CROP_WALLPAPER = "photostream.enable-crop";
 
 	private Context context;
 	SharedPreferences preferences;
@@ -105,5 +106,9 @@ public class UserPreferences {
 
 	public String getMyTags() {
 		return preferences.getString(ROTATION_MY_TAGS_KEY, "");
+	}
+
+	public boolean isCropWallpaper() {
+		return preferences.getBoolean(CROP_WALLPAPER, false);
 	}
 }

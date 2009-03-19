@@ -62,9 +62,11 @@ public class CropWallpaperTask extends UserTask<Photo, Void, Boolean> {
 			if (bitmap != null) {
 				int width = context.getWallpaperDesiredMinimumWidth();
 				int height = context.getWallpaperDesiredMinimumHeight();
-				Bitmap scaledBitmap = ImageUtilities.scale(bitmap, width,
-						height);
-				bitmap.recycle();
+				Bitmap scaledBitmap = bitmap;
+				if (bitmap.getWidth() != width || bitmap.getHeight() != height) {
+					scaledBitmap = ImageUtilities.scale(bitmap, width, height, true);
+					bitmap.recycle();
+				}
 				success = StreamUtils.saveBitmap(context, scaledBitmap, mFile
 						.getName());
 			}

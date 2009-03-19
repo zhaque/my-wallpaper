@@ -134,15 +134,19 @@ public final class ImageUtilities {
 
 	}
 
-	static Bitmap scale(Bitmap bitmap, int width, int height) {
-		final int bitmapWidth = bitmap.getWidth();
-		final int bitmapHeight = bitmap.getHeight();
+	static Bitmap scale(Bitmap bitmap, int width, int height, boolean scaleBoth) {
+		int scaledWidth = width;
+		int scaledHeight = height;
+		if (!scaleBoth) {
+			int bitmapWidth = bitmap.getWidth();
+			int bitmapHeight = bitmap.getHeight();
 
-		final float scale = Math.min((float) width / (float) bitmapWidth,
-				(float) height / (float) bitmapHeight);
+			float scale = Math.min((float) width / (float) bitmapWidth,
+					(float) height / (float) bitmapHeight);
 
-		final int scaledWidth = (int) (bitmapWidth * scale);
-		final int scaledHeight = (int) (bitmapHeight * scale);
+			scaledWidth = (int) (bitmapWidth * scale);
+			scaledHeight = (int) (bitmapHeight * scale);
+		}
 
 		Bitmap decored = Bitmap.createScaledBitmap(bitmap, scaledWidth,
 				scaledHeight, true);
@@ -150,10 +154,14 @@ public final class ImageUtilities {
 		return decored;
 
 	}
-	
+
 	public static int calculateSampleSize(final int screenWidth,
 			final int screenHeight, Integer bitmapWidth, Integer bitmapHeight) {
-		float size = Math.max(bitmapWidth / (float) screenWidth, bitmapHeight
+		// float size = bitmapWidth / (float) screenWidth;
+		// if (bitmapWidth < bitmapHeight) {
+		// size = bitmapHeight / (float) screenHeight;
+		// }
+		float size = Math.min(bitmapWidth / (float) screenWidth, bitmapHeight
 				/ (float) screenHeight);
 		int sampleSize = Math.round(size);
 		if (sampleSize < 1) {

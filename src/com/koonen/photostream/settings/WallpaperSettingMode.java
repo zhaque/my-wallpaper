@@ -8,9 +8,7 @@ package com.koonen.photostream.settings;
 public enum WallpaperSettingMode {
 
 	ORIGINAL_MODE("original"),
-
 	STRETCH_MODE("stretch"),
-
 	AUTO_MODE("auto");
 
 	private final String name;

@@ -125,6 +125,10 @@
 		Crop Wallpaper
 	</string>
 
+	<string name="user_preferences_wallpaper_setting_mode">
+		Wallpaper Setting Mode
+	</string>
+
 	<string name="preferences_ringtone">Select ringtone</string>
 
 	<string name="unknown_username">Could not find user %s</string>

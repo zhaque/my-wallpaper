@@ -64,6 +64,11 @@
 		<CheckBoxPreference android:key="photostream.enable-crop"
 			android:title="@string/user_preferences_crop_wallpaper"
 			android:defaultValue="false" />
+
+		<ListPreference android:dialogTitle=""
+			android:key="photostream.wallpaper-setting-mode" android:title="@string/user_preferences_wallpaper_setting_mode"
+			android:entries="@array/wallpaper_setting_mode_names" android:entryValues="@array/wallpaper_setting_mode_values"
+			android:defaultValue="original" />
 	</PreferenceCategory>
 
 </PreferenceScreen>

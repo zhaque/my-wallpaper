@@ -11,6 +11,8 @@ import android.util.Log;
 import com.koonen.photostream.api.Photo;
 import com.koonen.photostream.api.PhotoSize;
 import com.koonen.photostream.api.ServiceManager;
+import com.koonen.photostream.settings.UserPreferences;
+import com.koonen.photostream.settings.WallpaperSettingMode;
 import com.koonen.utils.StreamUtils;
 
 /**
@@ -37,6 +39,9 @@ public class CropWallpaperTask extends UserTask<Photo, Void, Boolean> {
 
 	public static final int REQUEST_CROP_IMAGE = 42;
 
+	// limit bu width or by height. in px
+	private static final int LIMIT_SIZE_IMAGE = 150;
+
 	private File mFile;
 	private Context context;
 	private CropWallpaperExecutor cropWallpaperExecutor;
@@ -60,12 +65,28 @@ public class CropWallpaperTask extends UserTask<Photo, Void, Boolean> {
 			Bitmap bitmap = ServiceManager.get().getService().loadPhotoBitmap(
 					params[0], PhotoSize.MEDIUM);
 			if (bitmap != null) {
-				int width = context.getWallpaperDesiredMinimumWidth();
-				int height = context.getWallpaperDesiredMinimumHeight();
 				Bitmap scaledBitmap = bitmap;
-				if (bitmap.getWidth() != width || bitmap.getHeight() != height) {
-					scaledBitmap = ImageUtilities.scale(bitmap, width, height, true);
-					bitmap.recycle();
+				int bitmapWidth = bitmap.getWidth();
+				int bitmapHeight = bitmap.getHeight();
+
+				UserPreferences preferences = new UserPreferences(context);
+				String wallpaerSettingMode = preferences
+						.getWallpaperSettingMode();
+
+				if (WallpaperSettingMode.STRETCH_MODE.getName().equals(
+						wallpaerSettingMode)
+						|| (WallpaperSettingMode.AUTO_MODE.getName().equals(
+								wallpaerSettingMode)
+								&& bitmapWidth > LIMIT_SIZE_IMAGE
+								&& bitmapHeight > LIMIT_SIZE_IMAGE && bitmapWidth > bitmapHeight)) {
+					int width = context.getWallpaperDesiredMinimumWidth();
+					int height = context.getWallpaperDesiredMinimumHeight();
+					if (bitmap.getWidth() != width
+							|| bitmap.getHeight() != height) {
+						scaledBitmap = ImageUtilities.scale(bitmap, width,
+								height, true);
+						bitmap.recycle();
+					}
 				}
 				success = StreamUtils.saveBitmap(context, scaledBitmap, mFile
 						.getName());

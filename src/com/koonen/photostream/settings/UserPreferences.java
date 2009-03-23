@@ -33,6 +33,7 @@ public class UserPreferences {
 
 	public static final String IMAGES_PER_REQUEST = "photostream.images_per_request";
 	public static final String CROP_WALLPAPER = "photostream.enable-crop";
+	public static final String WALLPAPER_SETTING_MODE = "photostream.wallpaper-setting-mode";
 
 	private Context context;
 	SharedPreferences preferences;
@@ -110,5 +111,10 @@ public class UserPreferences {
 
 	public boolean isCropWallpaper() {
 		return preferences.getBoolean(CROP_WALLPAPER, false);
+	}
+
+	public String getWallpaperSettingMode() {
+		return preferences.getString(WALLPAPER_SETTING_MODE,
+				WallpaperSettingMode.ORIGINAL_MODE.getName());
 	}
 }

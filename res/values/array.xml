@@ -53,7 +53,7 @@
 		<item>My SDCard</item>
 		<item>My Network</item>
 		<item>My Favorites</item>
-		<item>Randomize</item>		
+		<item>Randomize</item>
 		<item>My Group</item>
 	</string-array>
 
@@ -62,24 +62,24 @@
 		<item>sdcard</item>
 		<item>personal</item>
 		<item>favorites</item>
-		<item>random</item>		
+		<item>random</item>
 		<item>group</item>
 	</string-array>
 
 	<string-array name="photo_source_type_safe_names">
 		<item>My Phone</item>
-		<item>My SDCard</item>		
+		<item>My SDCard</item>
 		<item>My Favorites</item>
 		<item>Randomize</item>
 		<item>My Group</item>
 	</string-array>
-	
+
 	<string-array name="photo_source_type_safe_values">
 		<item>telephone</item>
-		<item>sdcard</item>		
+		<item>sdcard</item>
 		<item>favorites</item>
 		<item>random</item>
-		<item>group</item>				
+		<item>group</item>
 	</string-array>
 
 	<string-array name="network_names">
@@ -210,4 +210,15 @@
 		<item>944581@N22</item>
 	</string-array>
 
+	<string-array name="wallpaper_setting_mode_names">
+		<item>Original</item>
+		<item>Stretch</item>
+		<item>Auto</item>
+	</string-array>
+
+	<string-array name="wallpaper_setting_mode_values">
+		<item>original</item>
+		<item>stretch</item>
+		<item>auto</item>
+	</string-array>
 </resources>

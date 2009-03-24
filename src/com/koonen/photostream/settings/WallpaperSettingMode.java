@@ -3,13 +3,11 @@ package com.koonen.photostream.settings;
 /**
  * 
  * @author glick
- *
+ * 
  */
 public enum WallpaperSettingMode {
 
-	ORIGINAL_MODE("original"),
-	STRETCH_MODE("stretch"),
-	AUTO_MODE("auto");
+	ORIGINAL_MODE("original"), STRETCH_MODE("stretch"), AUTO_MODE("auto");
 
 	private final String name;
 
